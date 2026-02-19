@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: oklch(0.05 0 0);
+  --color-foreground: oklch(0.98 0 0);
+  --color-card: oklch(0.08 0 0);
+  --color-card-foreground: oklch(0.98 0 0);
+  --color-primary: oklch(0.7 0.15 142);
+  --color-primary-foreground: oklch(0.05 0 0);
+  --color-secondary: oklch(0.15 0 0);
+  --color-secondary-foreground: oklch(0.98 0 0);
+  --color-muted: oklch(0.12 0 0);
+  --color-muted-foreground: oklch(0.6 0 0);
+  --color-accent: oklch(0.15 0 0);
+  --color-accent-foreground: oklch(0.98 0 0);
+  --color-border: oklch(0.2 0 0);
+  --color-input: oklch(0.15 0 0);
+  --color-ring: oklch(0.7 0.15 142);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* ─── Staggered hero entrance animations ─── */
+@keyframes fade-in-hero {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-badge {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-heading {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-subheading {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-buttons {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-nav {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-hero {
+  animation: fade-in-hero 1s ease-out 0.2s forwards;
+  opacity: 0;
+}
+.animate-fade-in-badge {
+  animation: fade-in-badge 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+.animate-fade-in-heading {
+  animation: fade-in-heading 1s ease-out 0.6s forwards;
+  opacity: 0;
+}
+.animate-fade-in-subheading {
+  animation: fade-in-subheading 0.8s ease-out 0.8s forwards;
+  opacity: 0;
+}
+.animate-fade-in-buttons {
+  animation: fade-in-buttons 0.8s ease-out 1s forwards;
+  opacity: 0;
+}
+.animate-fade-in-nav {
+  animation: fade-in-nav 0.8s ease-out forwards;
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out forwards;
+}
+
+/* ─── Mobile menu ─── */
+@keyframes mobile-menu-item {
+  0% { opacity: 0; transform: translateY(-15px) translateX(-10px); }
+  100% { opacity: 1; transform: translateY(0) translateX(0); }
+}
+.animate-mobile-menu-item {
+  animation: mobile-menu-item 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* ─── Utility: hide scrollbar ─── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
