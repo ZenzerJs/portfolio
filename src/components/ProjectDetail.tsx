@@ -18,8 +18,10 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
   }[project.showcaseTier];
 
   return (
-    <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 px-5 sm:px-6">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 px-5 sm:px-6 relative">
+      {/* Subtle radial glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-3xl mx-auto relative">
         {/* Back link */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}

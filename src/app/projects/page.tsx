@@ -8,8 +8,10 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 px-5 sm:px-6">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 px-5 sm:px-6 relative">
+      {/* Subtle radial glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-5xl mx-auto relative">
         <div className="text-center mb-10 sm:mb-14">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
             Projects

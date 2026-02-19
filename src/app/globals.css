@@ -28,14 +28,26 @@
   --font-mono: var(--font-geist-mono);
 }
 
-html,
-body {
+html {
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
 body {
+  overflow-x: hidden;
   background: var(--color-background);
   color: var(--color-foreground);
+}
+
+::selection {
+  background: oklch(0.7 0.15 142 / 0.3);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid oklch(0.7 0.15 142 / 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* ─── Staggered hero entrance animations ─── */

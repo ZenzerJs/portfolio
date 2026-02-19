@@ -49,7 +49,7 @@ export function FeaturedProjects() {
         >
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors duration-200 group text-sm font-medium"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 hover:border-white/30 transition-all duration-300 group"
           >
             View all projects
             <ArrowRight
