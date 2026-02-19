@@ -11,7 +11,7 @@ const roles = [
 
 export function RolePills() {
   return (
-    <section className="py-12 px-4">
+    <section className="pt-2 pb-12 px-4">
       <div className="max-w-3xl mx-auto flex flex-wrap items-center justify-center gap-4">
         {roles.map((role, i) => (
           <motion.span

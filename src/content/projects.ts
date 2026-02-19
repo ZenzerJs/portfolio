@@ -102,7 +102,7 @@ export const projects: Project[] = [
     title: "Web Development — The Odin Project",
     oneLiner:
       "A growing collection of real-world web projects built from scratch, with Firebase integration for real-time data and authentication.",
-    category: "coursework",
+    category: "featured",
     status: "in-progress",
     tags: ["HTML", "CSS", "JavaScript", "Git", "React Native", "Firebase"],
     repoUrl: "https://github.com/ZenzerJs/odin-recipes",

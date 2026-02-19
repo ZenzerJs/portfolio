@@ -5,7 +5,7 @@ import { ArrowRight, Download } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-5 sm:px-6 py-20 relative">
+    <section className="min-h-[85vh] sm:min-h-screen flex items-center justify-center px-5 sm:px-6 py-20 relative">
       <div className="max-w-4xl mx-auto text-center relative z-10">
         {/* Badge */}
         <div className="inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/8 backdrop-blur-lg border border-white/15 text-white text-xs sm:text-sm font-medium mb-6 sm:mb-8 mt-16 sm:mt-12 shadow-[0_4px_20px_rgba(255,255,255,0.05)] animate-fade-in-badge">
