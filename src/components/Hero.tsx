@@ -41,8 +41,7 @@ export function Hero() {
 
           <a
             href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Jayden_Saha_Resume.pdf"
             className="w-full sm:w-auto rounded-full px-8 py-3.5 text-base font-medium border border-white/20 hover:bg-white/10 transition-all duration-200 hover:scale-105 inline-flex items-center justify-center gap-2 text-white"
           >
             <Download size={18} />

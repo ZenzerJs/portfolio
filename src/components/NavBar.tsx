@@ -123,8 +123,7 @@ export function NavBar() {
 
               <a
                 href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                download="Jayden_Saha_Resume.pdf"
                 className="bg-white hover:bg-gray-50 text-black font-medium px-4 py-1.5 rounded-full flex items-center gap-1.5 text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
               >
                 <FileText size={14} />
@@ -217,8 +216,7 @@ export function NavBar() {
 
               <a
                 href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                download="Jayden_Saha_Resume.pdf"
                 className={`bg-white hover:bg-gray-50 text-black font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-lg mt-1 ${
                   isOpen ? "animate-mobile-menu-item" : ""
                 }`}

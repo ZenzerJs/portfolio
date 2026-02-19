@@ -31,7 +31,7 @@ const footerLinks = [
   {
     label: "Resources",
     links: [
-      { title: "Resume", href: "/resume.pdf" },
+      { title: "Resume", href: "/resume.pdf", download: true },
     ],
   },
 ];
@@ -95,17 +95,18 @@ export function Footer() {
                     <li key={link.title}>
                       <a
                         href={link.href}
-                        target={
-                          link.href.startsWith("http") ||
-                          link.href.startsWith("mailto")
-                            ? "_blank"
-                            : undefined
-                        }
-                        rel={
-                          link.href.startsWith("http")
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
+                        {...("download" in link && link.download
+                          ? { download: "Jayden_Saha_Resume.pdf" }
+                          : {
+                              target:
+                                link.href.startsWith("http") ||
+                                link.href.startsWith("mailto")
+                                  ? "_blank"
+                                  : undefined,
+                              rel: link.href.startsWith("http")
+                                ? "noopener noreferrer"
+                                : undefined,
+                            })}
                         className="hover:text-foreground inline-flex items-center gap-1.5 transition-all duration-300"
                       >
                         {"icon" in link && link.icon && (
