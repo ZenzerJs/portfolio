@@ -37,7 +37,6 @@ export const projects: Project[] = [
       "Neural Networks",
       "Machine Learning",
     ],
-    repoUrl: "https://github.com/ZenzerJs",
     showcaseTier: "spotlight",
     highlights: [
       "Training an AI agent on demon-level difficulty maps",
@@ -60,7 +59,7 @@ export const projects: Project[] = [
     category: "featured",
     status: "shipped",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "WebGL"],
-    repoUrl: "https://github.com/ZenzerJs",
+    repoUrl: "https://github.com/ZenzerJs/portfolio",
     showcaseTier: "standard",
     highlights: [
       "Glassmorphism UI with animated WebGL Aurora background",
@@ -106,7 +105,7 @@ export const projects: Project[] = [
     category: "coursework",
     status: "in-progress",
     tags: ["HTML", "CSS", "JavaScript", "Git", "React Native", "Firebase"],
-    repoUrl: "https://github.com/ZenzerJs",
+    repoUrl: "https://github.com/ZenzerJs/odin-recipes",
     showcaseTier: "standard",
     highlights: [
       "Building responsive web applications adhering to modern web standards",
