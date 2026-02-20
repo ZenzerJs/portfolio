@@ -25,6 +25,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "ml-stock-simulator",
+    title: "ML Stock Simulator",
+    oneLiner:
+      "Educational ML simulation that forecasts stock returns using ARIMA, Ridge, and Random Forest. Compare bearish, stable, and bullish scenarios on 10 years of data.",
+    category: "featured",
+    status: "shipped",
+    tags: ["Python", "Machine Learning", "ARIMA", "Ridge", "Random Forest", "Railway"],
+    repoUrl: "https://github.com/ZenzerJs/ML-Stock-Simulator",
+    liveUrl: "https://ml-stock-simulator.up.railway.app/",
+    showcaseTier: "spotlight",
+    embed: {
+      type: "iframe",
+      src: "https://ml-stock-simulator.up.railway.app/",
+      title: "ML Stock Simulator",
+    },
+    highlights: [
+      "Compare ARIMA, Ridge, and Random Forest on 10 years of monthly stock data",
+      "Scenario forecasting — bearish, stable, and bullish projections for 6- or 12-month horizons",
+      "Walk-forward evaluation with MAE and RMSE metrics for each model",
+      "Educational tool with clear disclaimers — no financial advice, just clean analysis",
+    ],
+    whatIBuilt: [
+      "Baseline model comparison pipeline with scikit-learn and statsmodels",
+      "Scenario-based forecasting UI for exploring multiple futures",
+      "Time-respecting backtest with proper train/test splitting",
+      "Deployed full-stack app on Railway with live ticker search and interactive charts",
+    ],
+  },
+  {
     slug: "geometry-dash-ai",
     title: "Geometry Dash AI Agent",
     oneLiner:
@@ -37,7 +66,7 @@ export const projects: Project[] = [
       "Neural Networks",
       "Machine Learning",
     ],
-    showcaseTier: "spotlight",
+    showcaseTier: "standard",
     highlights: [
       "Training an AI agent on demon-level difficulty maps",
       "Custom reward system that rewards successful manoeuvres and penalizes failures",
