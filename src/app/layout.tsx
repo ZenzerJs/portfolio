@@ -1,39 +1,44 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono, Space_Grotesk, Syne } from "next/font/google";
+import { siteConfig } from "@/lib/site";
 import "./globals.css";
-import { NavBar } from "@/components/NavBar";
-import { Footer } from "@/components/Footer";
-import { PageTransition } from "@/components/PageTransition";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: siteConfig.url,
   title: {
-    default: "Jayden Saha — Portfolio",
-    template: "%s | Jayden Saha",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    "CS + Business Management @ Laurier · Full-Stack Developer · ML Enthusiast. A recruiter-optimized portfolio with projects and demos.",
+  description: siteConfig.description,
   openGraph: {
-    title: "Jayden Saha — Portfolio",
-    description:
-      "CS + Business Management @ Laurier · Full-Stack Developer · ML Enthusiast.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     type: "website",
-    locale: "en_CA",
+    locale: siteConfig.locale,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jayden Saha — Portfolio",
-    description:
-      "CS + Business Management @ Laurier · Full-Stack Developer · ML Enthusiast.",
+    title: siteConfig.title,
+    description: siteConfig.description,
   },
   robots: {
     index: true,
@@ -47,15 +52,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground`}
-      >
-        <NavBar />
-        <main className="min-h-screen">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
+    <html
+      lang="en"
+      className={`h-full antialiased ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${syne.variable}`}
+    >
+      <body suppressHydrationWarning className="min-h-full w-full bg-background text-foreground">
+        {children}
       </body>
     </html>
   );

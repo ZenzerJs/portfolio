@@ -1,23 +1,20 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { GradientBackground } from "@/components/layout/GradientBackground";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-5">
-      <div className="text-center">
-        <p className="text-7xl sm:text-8xl font-bold text-primary/30 mb-4">
-          404
-        </p>
-        <h1 className="text-2xl sm:text-3xl font-bold mb-3">Page not found</h1>
-        <p className="text-muted-foreground mb-8 max-w-sm mx-auto">
+    <div className="site-page relative flex min-h-screen items-center justify-center px-5">
+      <GradientBackground />
+      <div className="relative z-10 text-center">
+        <p className="text-7xl font-bold text-accent/30 sm:text-8xl">404</p>
+        <h1 className="mt-4 text-2xl font-semibold sm:text-3xl">Page not found</h1>
+        <p className="mx-auto mt-3 max-w-sm text-muted">
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-medium text-sm hover:bg-gray-50 hover:scale-105 transition-all duration-300"
-        >
+        <Link href="/" className="btn-primary mt-8 inline-flex">
           <ArrowLeft size={16} />
-          Back to Home
+          Back to home
         </Link>
       </div>
     </div>

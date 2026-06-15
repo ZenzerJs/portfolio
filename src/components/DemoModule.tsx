@@ -14,8 +14,9 @@ function DemoEmbed({ embed }: { embed: EmbedConfig }) {
       <iframe
         src={embed.src}
         title={embed.title || "Interactive demo"}
-        className="w-full rounded-xl border border-border"
+        className="w-full rounded-2xl border border-white/10"
         style={{ height: "500px" }}
+        loading="lazy"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
@@ -27,7 +28,7 @@ function DemoEmbed({ embed }: { embed: EmbedConfig }) {
       <video
         src={embed.src}
         controls
-        className="w-full rounded-xl border border-border"
+        className="w-full rounded-2xl border border-white/10"
         style={{ maxHeight: "500px" }}
       >
         <track kind="captions" />
@@ -46,9 +47,11 @@ export function DemoModule({ embed }: DemoModuleProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="rounded-2xl border border-border bg-card/50 backdrop-blur-sm overflow-hidden">
+    <div className="rounded-[1.75rem] border border-white/10 bg-card/50 backdrop-blur-sm overflow-hidden">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
         className="w-full flex items-center justify-between p-5 text-left hover:bg-accent/50 transition-colors"
       >
         <div className="flex items-center gap-3">

@@ -11,17 +11,11 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter();
 
-  const tierBadge = {
-    spotlight: { label: "Spotlight", className: "bg-primary/20 text-primary" },
-    standard: {
-      label: "Standard",
-      className: "bg-secondary text-secondary-foreground",
-    },
-    comingSoon: {
-      label: "Coming Soon",
-      className: "bg-muted text-muted-foreground",
-    },
-  }[project.showcaseTier];
+  const statusLabel = {
+    shipped: "Shipped",
+    "in-progress": "In progress",
+    comingSoon: "Coming soon",
+  }[project.status];
 
   return (
     <div
@@ -34,16 +28,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
           router.push(`/projects/${project.slug}`);
         }
       }}
-      className="block group cursor-pointer rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-6 h-full transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+      className="glass-card group cursor-pointer p-6"
     >
-      {/* Header: tier badge + links */}
-      <div className="flex items-start justify-between mb-4">
-        <span
-          className={`px-2.5 py-1 text-xs font-medium rounded-full ${tierBadge.className}`}
-        >
-          {tierBadge.label}
-        </span>
-
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <span className="chip text-accent">{statusLabel}</span>
         <div className="flex items-center gap-2">
           {project.repoUrl && (
             <a
@@ -51,7 +39,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted transition-colors hover:text-accent"
               aria-label="Repository"
             >
               <Github size={16} />
@@ -63,7 +51,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted transition-colors hover:text-accent"
               aria-label="Live demo"
             >
               <ExternalLink size={16} />
@@ -72,21 +60,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Title + description */}
-      <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-200">
+      <h3 className="display-heading text-2xl transition-colors group-hover:text-accent sm:text-[1.65rem]">
         {project.title}
       </h3>
-      <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-        {project.oneLiner}
-      </p>
+      <p className="mt-3 text-sm leading-relaxed text-muted">{project.oneLiner}</p>
 
-      {/* Tags */}
-      <div className="flex flex-wrap gap-1.5">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-2 py-1 text-xs rounded-md bg-secondary text-secondary-foreground"
-          >
+      <div className="mt-4 flex flex-wrap gap-2">
+        {project.tags.slice(0, 4).map((tag) => (
+          <span key={tag} className="chip">
             {tag}
           </span>
         ))}
