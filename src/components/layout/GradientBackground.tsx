@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
 
+// Loaded lazily after first paint — keeps ogl out of the critical JS path
 const Aurora = dynamic(() => import("@/components/Aurora"), { ssr: false });
 
 type GradientBackgroundProps = {
@@ -58,6 +59,18 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({ x: -9999, y: -9999, active: false });
   const scroll = useRef({ y: 0, velocity: 0 });
+  const [auroraReady, setAuroraReady] = useState(false);
+
+  // Defer Aurora until after first paint + idle — keeps ogl off the critical path
+  useEffect(() => {
+    if (!interactive) return;
+    const ric = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1500));
+    const id = ric(() => setAuroraReady(true));
+    return () => {
+      if (window.cancelIdleCallback) window.cancelIdleCallback(id as number);
+      else clearTimeout(id as number);
+    };
+  }, [interactive]);
 
   useEffect(() => {
     if (!interactive) return;
@@ -336,14 +349,16 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
     <div className="site-gradient" aria-hidden="true">
       {interactive ? (
         <>
-          <div className="site-gradient-aurora site-gradient-aurora--primary">
-            <Aurora
-              colorStops={["#0e7490", "#1e3a8a", "#6d28d9"]}
-              amplitude={1.3}
-              blend={0.72}
-              speed={0.75}
-            />
-          </div>
+          {auroraReady ? (
+            <div className="site-gradient-aurora site-gradient-aurora--primary">
+              <Aurora
+                colorStops={["#0e7490", "#1e3a8a", "#6d28d9"]}
+                amplitude={1.3}
+                blend={0.72}
+                speed={0.75}
+              />
+            </div>
+          ) : null}
           <canvas ref={canvasRef} className="site-gradient-particles" />
           <div className="site-gradient-grid site-gradient-grid--animated" />
         </>
