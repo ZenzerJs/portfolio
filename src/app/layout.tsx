@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Space_Grotesk, Syne } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -58,6 +59,7 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning className="min-h-full w-full bg-background text-foreground">
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
