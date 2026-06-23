@@ -4,7 +4,7 @@ export function Marquee() {
   const items = [...heroMarqueeItems, ...heroMarqueeItems];
 
   return (
-    <div className="marquee-wrap">
+    <div className="marquee-wrap" aria-hidden="true">
       <div className="marquee-track">
         {items.map((item, index) => (
           <span key={`${item}-${index}`} className="marquee-item">

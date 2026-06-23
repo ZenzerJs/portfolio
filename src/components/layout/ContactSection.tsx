@@ -1,5 +1,4 @@
 import { links, profile } from "@/data/portfolio";
-import Link from "next/link";
 import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 
 export function ContactSection() {
@@ -12,7 +11,7 @@ export function ContactSection() {
           <span className="section-title-slash">/</span>
         </h2>
         <p className="mt-3 max-w-xl text-muted">
-          Open to internships, collaborations, and conversations about AI, full-stack, or ops.
+          {profile.availability} — open to conversations about AI, full-stack, or IT ops.
         </p>
       </header>
 
@@ -42,13 +41,13 @@ export function ContactSection() {
           </a>
         </div>
 
-        <Link
+        <a
           href={links.resume}
           download="Jayden_Saha_Resume.pdf"
           className="mt-6 inline-flex text-sm text-accent hover:underline"
         >
           Download resume →
-        </Link>
+        </a>
       </div>
     </section>
   );

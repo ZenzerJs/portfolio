@@ -15,7 +15,7 @@ export function Hero() {
           {profile.available ? (
             <div className="badge-pill mb-8">
               <span className="badge-dot" aria-hidden="true" />
-              Available for work
+              {profile.availability}
             </div>
           ) : null}
 

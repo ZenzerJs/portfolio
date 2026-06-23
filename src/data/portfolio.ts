@@ -1,11 +1,23 @@
+import { laurierCourses } from "@/data/courses";
+
+export type CourseworkEntry = {
+  code: string;
+  label: string;
+  status: "completed" | "in-progress";
+  grade?: string;
+  bohrUrl?: string;
+  calendarUrl?: string;
+};
+
 export const profile = {
   name: "Jayden Saha",
   role: "IT Operations · CS @ Laurier",
   location: "Greater Toronto Area",
+  availability: "Open to Fall 2026 / Winter 2027 co-op",
   tagline:
     "Building AI agents, ML pipelines, and full-stack products — turning hard technical problems into tools people can actually use.",
   intro:
-    "IT Operations at Trillium Health Partners. Computer Science student at Laurier shipping AI agents, full-stack apps, and ML tools with Python, TypeScript, and React Native.",
+    "IT Operations at Trillium Health Partners. Second-year CS student at Laurier shipping AI agents, full-stack apps, and ML tools with Python, TypeScript, and React Native.",
   email: "Jaydensaha@yahoo.com",
   available: true,
 };
@@ -35,13 +47,14 @@ export const heroMarqueeItems = [
   "Java",
   "SQL",
   "TypeScript",
+  "React Native",
 ];
 
 export const aboutContent = {
   blocks: [
     {
       label: "About Me",
-      body: "I'm Jayden — a Computer Science student at Laurier with a Business Management option, currently working in IT Operations at Trillium Health Partners.",
+      body: "I'm Jayden — a second-year Computer Science student at Laurier with a Business Management option, currently working in IT Operations at Trillium Health Partners.",
     },
     {
       label: "Why I Build",
@@ -49,12 +62,12 @@ export const aboutContent = {
     },
     {
       label: "Right Now",
-      body: "Splitting time between enterprise IT ops, coursework, and side projects in ML and multi-agent AI — always looking for internships and collaborations where I can grow.",
+      body: "Balancing enterprise IT ops while actively taking CP213 (OOP) and CP363 (Databases, early enrollment), plus side projects in ML and multi-agent AI. Open to Fall 2026 / Winter 2027 co-op opportunities.",
     },
   ],
   highlights: [
     { label: "Based in", value: "Greater Toronto Area" },
-    { label: "Studying", value: "CS @ Laurier" },
+    { label: "Studying", value: "2nd year CS @ Laurier" },
     { label: "Working", value: "IT Ops @ THP" },
     { label: "Stack", value: "Python · TS · React Native" },
   ],
@@ -77,9 +90,9 @@ export const experiences = [
     description:
       "Supporting enterprise IT in a hospital network — troubleshooting systems, coordinating infrastructure work, and keeping clinical and corporate technology reliable.",
     bullets: [
-      "Enterprise IT support & incident response",
-      "Systems troubleshooting & documentation",
-      "Cross-team coordination in healthcare IT",
+      "Enterprise IT support with Active Directory, VMware, and Veeam",
+      "Infrastructure tracking and documentation via Sunbird dcTrack",
+      "Incident response, systems troubleshooting, and cross-team coordination",
     ],
   },
   {
@@ -105,10 +118,41 @@ export const educationEntries = [
     degree: "Honours BSc — Computer Science, Business Management Option",
     yearRange: "2024 – 2030",
     highlights: [
-      "Algorithms, data structures, and OOP coursework",
-      "Portfolio projects alongside degree requirements",
+      "Second-year CS student — CP104 (98%) and CP164 (99%) in foundational courses",
+      "Actively taking CP213 (OOP) and CP363 (Databases, early enrollment)",
     ],
-    coursework: ["CP104", "CP164", "CP213", "CP363"],
+    coursework: [
+      {
+        code: "CP104",
+        label: laurierCourses.cp104.label,
+        status: "completed",
+        grade: "98%",
+        bohrUrl: laurierCourses.cp104.bohrUrl,
+        calendarUrl: laurierCourses.cp104.calendarUrl,
+      },
+      {
+        code: "CP164",
+        label: laurierCourses.cp164.label,
+        status: "completed",
+        grade: "99%",
+        bohrUrl: laurierCourses.cp164.bohrUrl,
+        calendarUrl: laurierCourses.cp164.calendarUrl,
+      },
+      {
+        code: "CP213",
+        label: laurierCourses.cp213.label,
+        status: "in-progress",
+        bohrUrl: laurierCourses.cp213.bohrUrl,
+        calendarUrl: laurierCourses.cp213.calendarUrl,
+      },
+      {
+        code: "CP363",
+        label: "Databases (early)",
+        status: "in-progress",
+        bohrUrl: laurierCourses.cp363.bohrUrl,
+        calendarUrl: laurierCourses.cp363.calendarUrl,
+      },
+    ] satisfies CourseworkEntry[],
   },
 ];
 
@@ -138,6 +182,17 @@ export const skillGroups = [
       "Machine Learning",
       "AI Agents",
       "Full-Stack Development",
+    ],
+  },
+  {
+    title: "IT & Infrastructure",
+    skills: [
+      "Active Directory",
+      "VMware",
+      "Veeam",
+      "Sunbird dcTrack",
+      "Incident Response",
+      "Systems Documentation",
     ],
   },
 ];

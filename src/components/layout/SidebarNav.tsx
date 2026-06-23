@@ -100,13 +100,13 @@ export function SidebarNav() {
         <div className="mobile-menu-panel lg:hidden">
           <nav className="sidebar-nav !mt-0">{navLinks}</nav>
           <div className="mt-6 flex gap-4">
-            <a href={links.github} target="_blank" rel="noreferrer" className="text-muted hover:text-accent">
+            <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="text-muted hover:text-accent">
               <Github size={18} />
             </a>
-            <a href={links.linkedin} target="_blank" rel="noreferrer" className="text-muted hover:text-accent">
+            <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="text-muted hover:text-accent">
               <Linkedin size={18} />
             </a>
-            <a href={`mailto:${profile.email}`} className="text-muted hover:text-accent">
+            <a href={`mailto:${profile.email}`} aria-label="Email" className="text-muted hover:text-accent">
               <Mail size={18} />
             </a>
           </div>
@@ -122,7 +122,7 @@ export function SidebarNav() {
         <nav className="sidebar-nav">{navLinks}</nav>
 
         <div className="sidebar-footer">
-          <p>Open to opportunities</p>
+          <p>{profile.availability}</p>
           <div className="sidebar-socials">
             <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
               <Github size={16} />

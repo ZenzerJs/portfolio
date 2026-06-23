@@ -19,9 +19,15 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
     comingSoon: "Coming soon",
   }[project.status];
 
+  const showcaseTierLabel = {
+    spotlight: "Spotlight",
+    standard: "Featured",
+    comingSoon: "Coming soon",
+  }[project.showcaseTier];
+
   return (
     <div className="site-page">
-      <GradientBackground />
+      <GradientBackground interactive={false} />
       <SidebarNav />
 
       <main className="site-main min-h-screen pb-16 pt-24 lg:pt-10">
@@ -36,7 +42,9 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
           <div className="mb-4 flex flex-wrap gap-2">
             <span className="chip text-accent">{statusLabel}</span>
-            <span className="chip">{project.showcaseTier}</span>
+            {project.showcaseTier !== "standard" ? (
+              <span className="chip">{showcaseTierLabel}</span>
+            ) : null}
           </div>
 
           <h1 className="display-heading text-4xl sm:text-5xl">{project.title}</h1>
@@ -63,6 +71,28 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
               >
                 <ExternalLink size={16} />
                 Live demo
+              </a>
+            )}
+            {project.bohrUrl && (
+              <a
+                href={project.bohrUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                <ExternalLink size={16} />
+                Bohr course page
+              </a>
+            )}
+            {project.calendarUrl && (
+              <a
+                href={project.calendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                <ExternalLink size={16} />
+                Laurier calendar
               </a>
             )}
           </div>

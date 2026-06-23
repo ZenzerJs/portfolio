@@ -1,3 +1,5 @@
+import { laurierCourses } from "@/data/courses";
+
 export type ShowcaseTier = "spotlight" | "standard" | "comingSoon";
 export type ProjectCategory = "featured" | "coursework";
 export type ProjectStatus = "shipped" | "in-progress" | "comingSoon";
@@ -17,18 +19,27 @@ export interface Project {
   tags: string[];
   repoUrl?: string;
   liveUrl?: string;
+  bohrUrl?: string;
+  calendarUrl?: string;
   showcaseTier: ShowcaseTier;
   embed?: EmbedConfig;
   highlights: string[];
   whatIBuilt: string[];
 }
 
+export const HOMEPAGE_SLUGS = [
+  "ml-stock-simulator",
+  "omni-architect",
+  "geometry-dash-ai",
+  "scholars-spark",
+] as const;
+
 export const projects: Project[] = [
   {
     slug: "ml-stock-simulator",
     title: "ML Stock Simulator",
     oneLiner:
-      "Built a machine learning model to forecast stock prices using historical market data — engineered features, trained on real financial data, and visualized predictions against actual prices.",
+      "ML forecasting on 10 years of market data — ARIMA, Ridge, and Random Forest compared with walk-forward MAE/RMSE backtesting and live scenario projections.",
     category: "featured",
     status: "shipped",
     tags: ["Python", "Machine Learning", "PyTorch", "scikit-learn", "Next.js"],
@@ -58,12 +69,12 @@ export const projects: Project[] = [
     slug: "omni-architect",
     title: "Omni Architect",
     oneLiner:
-      "A multi-agent AI orchestration system built with Python, LangGraph, LangChain, and the Groq API — designed for task decomposition and parallel execution across specialized agents.",
+      "Multi-agent AI orchestration with LangGraph and LangChain — task decomposition, parallel agent execution, and vision-to-code via Groq API.",
     category: "featured",
     status: "shipped",
     tags: ["Python", "LangChain", "LangGraph", "Groq API", "AI Agents"],
-    repoUrl: "https://github.com/ZenzerJs",
-    showcaseTier: "standard",
+    repoUrl: "https://github.com/ZenzerJs/Omni-Architect",
+    showcaseTier: "spotlight",
     highlights: [
       "Multi-agent coordination with LangGraph state machines",
       "Task decomposition and parallel execution across specialized agents",
@@ -78,18 +89,62 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "geometry-dash-ai",
+    title: "Geometry Dash AI Agent",
+    oneLiner:
+      "A reinforcement learning agent trained to master demon-level maps in Geometry Dash using neural networks and a custom reward system.",
+    category: "featured",
+    status: "in-progress",
+    tags: ["Python", "Reinforcement Learning", "Neural Networks"],
+    showcaseTier: "standard",
+    highlights: [
+      "Training an AI agent on demon-level difficulty maps",
+      "Custom reward system for successful manoeuvres vs failures",
+      "Built from scratch with Python and ML libraries",
+      "Iterative training loop with observable improvement over time",
+    ],
+    whatIBuilt: [
+      "Artificial neural network as the core decision-making system",
+      "Reinforcement learning environment interfacing with the game",
+      "Reward shaping pipeline for effective trial-and-error learning",
+      "Training infrastructure and performance monitoring",
+    ],
+  },
+  {
+    slug: "scholars-spark",
+    title: "Scholar's Spark",
+    oneLiner:
+      "An iOS app connecting high school students with relevant academic opportunities, built during a Swift development internship at the Career Education Council.",
+    category: "featured",
+    status: "shipped",
+    tags: ["Swift", "Xcode", "iOS", "UI/UX Design"],
+    showcaseTier: "standard",
+    highlights: [
+      "Pitched to industry professionals and received positive feedback on design and impact",
+      "Developed functional prototypes weekly with stakeholder integration",
+      "Conducted testing and debugging to resolve logic errors before deployment",
+      "Earned CEC Swift Certification upon completion",
+    ],
+    whatIBuilt: [
+      "Full iOS app prototype in Swift using Xcode",
+      "User interface connecting students with academic resources",
+      "Iterative prototyping workflow with weekly deliverables and QA cycles",
+      "Final polished presentation delivered to industry professionals",
+    ],
+  },
+  {
     slug: "portfolio-site",
     title: "Jayden's Dev Portfolio",
     oneLiner:
-      "Designed and built a fully responsive personal portfolio from scratch — CSS Grid and Flexbox layouts, custom animations, mobile-first design, deployed live on Vercel.",
+      "Designed and built a fully responsive personal portfolio from scratch — aurora-glass UI, interactive constellation background, and mobile-first layout deployed on Vercel.",
     category: "featured",
     status: "shipped",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Canvas", "Vercel"],
     repoUrl: "https://github.com/ZenzerJs/portfolio",
-    liveUrl: "https://jayden-saha.vercel.app",
+    liveUrl: "https://jaydens-dev-portfolio.vercel.app",
     showcaseTier: "standard",
     highlights: [
-      "Sketch-inspired UI with interactive hero drawing layer",
+      "Interactive constellation canvas with depth parallax and cursor links",
       "Data-driven projects system — add projects by editing one file",
       "Single-page scroll with experience, skills, and education sections",
       "Responsive, accessible, and optimized for recruiter scanning",
@@ -125,58 +180,16 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "scholars-spark",
-    title: "Scholar's Spark",
-    oneLiner:
-      "An iOS app connecting high school students with relevant academic opportunities, built during a Swift development internship at the Career Education Council.",
-    category: "featured",
-    status: "shipped",
-    tags: ["Swift", "Xcode", "iOS", "UI/UX Design"],
-    showcaseTier: "standard",
-    highlights: [
-      "Pitched to industry professionals and received positive feedback on design and impact",
-      "Developed functional prototypes weekly with stakeholder integration",
-      "Conducted testing and debugging to resolve logic errors before deployment",
-      "Earned CEC Swift Certification upon completion",
-    ],
-    whatIBuilt: [
-      "Full iOS app prototype in Swift using Xcode",
-      "User interface connecting students with academic resources",
-      "Iterative prototyping workflow with weekly deliverables and QA cycles",
-      "Final polished presentation delivered to industry professionals",
-    ],
-  },
-  {
-    slug: "geometry-dash-ai",
-    title: "Geometry Dash AI Agent",
-    oneLiner:
-      "A reinforcement learning agent trained to master demon-level maps in Geometry Dash using neural networks and a custom reward system.",
-    category: "featured",
-    status: "in-progress",
-    tags: ["Python", "Reinforcement Learning", "Neural Networks"],
-    showcaseTier: "standard",
-    highlights: [
-      "Training an AI agent on demon-level difficulty maps",
-      "Custom reward system for successful manoeuvres vs failures",
-      "Built from scratch with Python and ML libraries",
-      "Iterative training loop with observable improvement over time",
-    ],
-    whatIBuilt: [
-      "Artificial neural network as the core decision-making system",
-      "Reinforcement learning environment interfacing with the game",
-      "Reward shaping pipeline for effective trial-and-error learning",
-      "Training infrastructure and performance monitoring",
-    ],
-  },
-  {
     slug: "cp104-intro-programming",
-    title: "CP104 — Intro to Programming",
+    title: "CP104 — Intro to Programming (98%)",
     oneLiner:
-      "9 assignments and 11 labs in Python covering functions, algorithms, data structures, string processing, and file I/O at Laurier.",
+      "9 assignments and 11 labs in Python covering functions, algorithms, data structures, string processing, and file I/O — finished with 98%.",
     category: "coursework",
     status: "shipped",
     tags: ["Python", "Algorithms", "File I/O", "Data Processing"],
     showcaseTier: "standard",
+    bohrUrl: laurierCourses.cp104.bohrUrl,
+    calendarUrl: laurierCourses.cp104.calendarUrl,
     highlights: [
       "Prime number detection with optimized trial division",
       "ISBN-13 validation with multi-step format checking",
@@ -192,13 +205,15 @@ export const projects: Project[] = [
   },
   {
     slug: "cp164-data-structures",
-    title: "CP164 — Data Structures & OOP",
+    title: "CP164 — Data Structures (99%)",
     oneLiner:
-      "Object-oriented programming in Python — classes, magic methods, file serialization, and data filtering patterns at Laurier.",
+      "Object-oriented programming in Python — classes, magic methods, file serialization, and data filtering patterns — finished with 99%.",
     category: "coursework",
-    status: "in-progress",
+    status: "shipped",
     tags: ["Python", "OOP", "Data Structures", "Classes"],
-    showcaseTier: "comingSoon",
+    showcaseTier: "standard",
+    bohrUrl: laurierCourses.cp164.bohrUrl,
+    calendarUrl: laurierCourses.cp164.calendarUrl,
     highlights: [
       "Custom class with full comparison operator overloading",
       "File serialization — reading and writing objects to pipe-delimited files",
@@ -211,6 +226,49 @@ export const projects: Project[] = [
       "Multi-criteria search functions",
     ],
   },
+  {
+    slug: "cp213-oop",
+    title: "CP213 — Object-Oriented Programming",
+    oneLiner:
+      "Second-year OOP course at Laurier — actively enrolled in inheritance, polymorphism, design patterns, and structured software design in Java.",
+    category: "coursework",
+    status: "in-progress",
+    tags: ["Java", "OOP", "Design Patterns", "Inheritance"],
+    showcaseTier: "comingSoon",
+    bohrUrl: laurierCourses.cp213.bohrUrl,
+    calendarUrl: laurierCourses.cp213.calendarUrl,
+    highlights: [
+      "Object-oriented design principles and class hierarchies",
+      "Polymorphism, encapsulation, and abstraction in practice",
+      "Design pattern applications in coursework assignments",
+    ],
+    whatIBuilt: [
+      "Structured Java programs with reusable class architectures",
+      "Assignment solutions demonstrating OOP best practices",
+    ],
+  },
+  {
+    slug: "cp363-databases",
+    title: "CP363 — Databases",
+    oneLiner:
+      "Third-year databases course taken early — actively enrolled in relational design, SQL queries, normalization, and data modeling.",
+    category: "coursework",
+    status: "in-progress",
+    tags: ["SQL", "Database Design", "Normalization", "Relational Model"],
+    showcaseTier: "comingSoon",
+    bohrUrl: laurierCourses.cp363.bohrUrl,
+    calendarUrl: laurierCourses.cp363.calendarUrl,
+    highlights: [
+      "Enrolled ahead of schedule as a second-year student",
+      "Relational schema design and entity-relationship modeling",
+      "Complex SQL queries — joins, aggregations, and subqueries",
+      "Database normalization and integrity constraints",
+    ],
+    whatIBuilt: [
+      "Schema designs for structured data problems",
+      "SQL query sets for data retrieval and manipulation",
+    ],
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
@@ -219,4 +277,10 @@ export function getProjectBySlug(slug: string): Project | undefined {
 
 export function getFeaturedProjects(): Project[] {
   return projects.filter((p) => p.category === "featured");
+}
+
+export function getHomepageProjects(): Project[] {
+  return HOMEPAGE_SLUGS.map((slug) => projects.find((p) => p.slug === slug)).filter(
+    (p): p is Project => p !== undefined,
+  );
 }

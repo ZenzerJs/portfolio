@@ -1,3 +1,6 @@
+import { ExternalLink } from "lucide-react";
+import type { CourseworkEntry } from "@/data/portfolio";
+
 type EducationSectionProps = {
   school: string;
   shortName: string;
@@ -5,8 +8,15 @@ type EducationSectionProps = {
   degree: string;
   yearRange: string;
   highlights: string[];
-  coursework: string[];
+  coursework: CourseworkEntry[];
 };
+
+function formatCourseChip(course: CourseworkEntry) {
+  if (course.status === "completed" && course.grade) {
+    return `${course.code} · ${course.grade}`;
+  }
+  return `${course.code} · In progress`;
+}
 
 export function EducationSection({
   school,
@@ -45,10 +55,44 @@ export function EducationSection({
       {coursework.length > 0 && (
         <div className="mt-6">
           <p className="paren-label">( Relevant coursework )</p>
-          <ul className="flex flex-wrap gap-2">
+          <ul className="space-y-3">
             {coursework.map((course) => (
-              <li key={course}>
-                <span className="chip">{course}</span>
+              <li key={course.code}>
+                <div className="flex flex-wrap items-center gap-2">
+                  {course.bohrUrl ? (
+                    <a
+                      href={course.bohrUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`${course.label} on Bohr`}
+                      className={`chip transition-colors hover:border-[var(--accent)] hover:text-accent ${
+                        course.status === "in-progress" ? "chip--warm" : ""
+                      }`}
+                    >
+                      {formatCourseChip(course)}
+                    </a>
+                  ) : (
+                    <span
+                      className={`chip ${course.status === "in-progress" ? "chip--warm" : ""}`}
+                      title={course.label}
+                    >
+                      {formatCourseChip(course)}
+                    </span>
+                  )}
+                  {course.calendarUrl ? (
+                    <a
+                      href={course.calendarUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-muted transition-colors hover:text-accent"
+                      aria-label={`${course.code} Laurier academic calendar`}
+                    >
+                      Calendar
+                      <ExternalLink size={12} aria-hidden="true" />
+                    </a>
+                  ) : null}
+                </div>
+                <p className="mt-1 text-xs text-muted">{course.label}</p>
               </li>
             ))}
           </ul>

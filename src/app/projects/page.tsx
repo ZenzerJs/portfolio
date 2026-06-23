@@ -13,7 +13,7 @@ export const metadata = {
 export default function ProjectsPage() {
   return (
     <div className="site-page">
-      <GradientBackground />
+      <GradientBackground interactive={false} />
       <SidebarNav />
 
       <main className="site-main min-h-screen pb-16 pt-24 lg:pt-10">

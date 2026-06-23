@@ -1,6 +1,4 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/content/projects";
 
@@ -9,8 +7,6 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const router = useRouter();
-
   const statusLabel = {
     shipped: "Shipped",
     "in-progress": "In progress",
@@ -18,29 +14,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }[project.status];
 
   return (
-    <div
-      role="link"
-      tabIndex={0}
-      onClick={() => router.push(`/projects/${project.slug}`)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          router.push(`/projects/${project.slug}`);
-        }
-      }}
-      className="glass-card group cursor-pointer p-6"
-    >
-      <div className="mb-4 flex items-start justify-between gap-3">
+    <article className="glass-card group relative p-6">
+      <Link
+        href={`/projects/${project.slug}`}
+        className="absolute inset-0 z-0 rounded-[inherit]"
+        aria-label={`View ${project.title}`}
+      />
+
+      <div className="relative z-10 mb-4 flex items-start justify-between gap-3">
         <span className="chip text-accent">{statusLabel}</span>
-        <div className="flex items-center gap-2">
+        <div className="pointer-events-auto flex items-center gap-2">
           {project.repoUrl && (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="text-muted transition-colors hover:text-accent"
-              aria-label="Repository"
+              className="relative z-20 text-muted transition-colors hover:text-accent"
+              aria-label={`${project.title} repository`}
             >
               <Github size={16} />
             </a>
@@ -50,9 +40,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="text-muted transition-colors hover:text-accent"
-              aria-label="Live demo"
+              className="relative z-20 text-muted transition-colors hover:text-accent"
+              aria-label={`${project.title} live demo`}
             >
               <ExternalLink size={16} />
             </a>
@@ -60,18 +49,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </div>
 
-      <h3 className="display-heading text-2xl transition-colors group-hover:text-accent sm:text-[1.65rem]">
-        {project.title}
-      </h3>
-      <p className="mt-3 text-sm leading-relaxed text-muted">{project.oneLiner}</p>
+      <div className="relative z-10 pointer-events-none">
+        <h3 className="display-heading text-2xl transition-colors group-hover:text-accent sm:text-[1.65rem]">
+          {project.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted">{project.oneLiner}</p>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {project.tags.slice(0, 4).map((tag) => (
-          <span key={tag} className="chip">
-            {tag}
-          </span>
-        ))}
+        <div className="mt-4 flex flex-wrap gap-2">
+          {project.tags.slice(0, 4).map((tag) => (
+            <span key={tag} className="chip">
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+    </article>
   );
 }

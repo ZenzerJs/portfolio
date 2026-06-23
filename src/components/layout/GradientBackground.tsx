@@ -5,23 +5,27 @@ import { useEffect, useRef } from "react";
 
 const Aurora = dynamic(() => import("@/components/Aurora"), { ssr: false });
 
+type GradientBackgroundProps = {
+  /** Full aurora + constellation canvas. Use false on inner pages for better performance. */
+  interactive?: boolean;
+};
+
 type Star = {
-  /** base position in canvas space (unwrapped) */
   x: number;
   y: number;
   vx: number;
   vy: number;
   size: number;
-  /** 0.35 (far) → 1 (near) — drives parallax, size, brightness */
   depth: number;
   hue: number;
   twinklePhase: number;
   twinkleSpeed: number;
 };
 
-// Particle density scales with viewport area, capped for performance.
+// Sqrt scaling keeps desktop star counts from exploding vs mobile.
 function targetCount(width: number, height: number) {
-  return Math.min(Math.round((width * height) / 11000), 150);
+  const base = Math.round(Math.sqrt(width * height) / 28);
+  return Math.min(Math.max(base, 32), 85);
 }
 
 function createStars(count: number, width: number, height: number): Star[] {
@@ -41,19 +45,30 @@ function createStars(count: number, width: number, height: number): Star[] {
   });
 }
 
-export function GradientBackground() {
+const CONNECT = 138;
+const CURSOR_RADIUS = 220;
+const GRID_CELL = CONNECT;
+const ALPHA_BUCKETS = 6;
+
+function bucketIndex(alpha: number) {
+  return Math.min(ALPHA_BUCKETS - 1, Math.floor(alpha * ALPHA_BUCKETS));
+}
+
+export function GradientBackground({ interactive = true }: GradientBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({ x: -9999, y: -9999, active: false });
   const scroll = useRef({ y: 0, velocity: 0 });
 
   useEffect(() => {
+    if (!interactive) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let stars: Star[] = [];
@@ -62,18 +77,18 @@ export function GradientBackground() {
     let height = 0;
     let dpr = 1;
     let running = true;
+    let lastFrame = 0;
 
-    // Eased mouse-parallax offset for the whole field.
     let parallaxX = 0;
     let parallaxY = 0;
 
-    const CONNECT = 138;
-    const CURSOR_RADIUS = 220;
+    const lineBuckets: number[][] = Array.from({ length: ALPHA_BUCKETS }, () => []);
+    const cursorBuckets: number[][] = Array.from({ length: ALPHA_BUCKETS }, () => []);
 
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
@@ -97,7 +112,6 @@ export function GradientBackground() {
       lastScroll = y;
     };
 
-    // Click burst — radial impulse on nearby stars.
     const onClick = (e: MouseEvent) => {
       for (const s of stars) {
         const dx = s.x + parallaxX * s.depth - e.clientX;
@@ -117,16 +131,48 @@ export function GradientBackground() {
     const onVisibility = () => {
       running = !document.hidden;
       if (running) {
+        lastFrame = 0;
         frameId = requestAnimationFrame(loop);
       } else {
         cancelAnimationFrame(frameId);
       }
     };
 
-    const draw = () => {
+    const strokeBuckets = (
+      buckets: number[][],
+      rx: number[],
+      ry: number[],
+      strokeHue: number | ((i: number) => number),
+    ) => {
+      for (let b = 0; b < ALPHA_BUCKETS; b++) {
+        const bucket = buckets[b];
+        if (bucket.length === 0) continue;
+
+        const alpha = (b + 0.5) / ALPHA_BUCKETS;
+        ctx.globalAlpha = alpha;
+        ctx.lineWidth = 0.55;
+        ctx.beginPath();
+
+        for (let k = 0; k < bucket.length; k += 4) {
+          const x1 = bucket[k];
+          const y1 = bucket[k + 1];
+          const x2 = bucket[k + 2];
+          const y2 = bucket[k + 3];
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+        }
+
+        const hue = typeof strokeHue === "number" ? strokeHue : strokeHue(0);
+        ctx.strokeStyle = `hsla(${hue}, 80%, 66%, 1)`;
+        ctx.stroke();
+        bucket.length = 0;
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const draw = (time: number) => {
       ctx.clearRect(0, 0, width, height);
 
-      // Ease whole-field parallax toward the cursor for a subtle depth tilt.
       if (mouse.current.active) {
         const tx = (mouse.current.x - width / 2) * 0.025;
         const ty = (mouse.current.y - height / 2) * 0.025;
@@ -137,18 +183,19 @@ export function GradientBackground() {
         parallaxY += (0 - parallaxY) * 0.05;
       }
 
-      // Decay scroll velocity so the "streak" boost fades after scrolling stops.
       scroll.current.velocity *= 0.9;
       const scrollBoost = Math.min(Math.abs(scroll.current.velocity) / 40, 1);
+      const t = time * 0.001;
 
-      const time = performance.now() * 0.001;
       const rx: number[] = new Array(stars.length);
       const ry: number[] = new Array(stars.length);
+      const grid = new Map<string, number[]>();
+
+      const cellKey = (cx: number, cy: number) => `${cx},${cy}`;
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
 
-        // Cursor repel.
         if (mouse.current.active) {
           const pdx = mouse.current.x - (s.x + parallaxX * s.depth);
           const pdy =
@@ -163,51 +210,59 @@ export function GradientBackground() {
           }
         }
 
-        // Drift + gentle return-to-calm damping.
         s.x += s.vx;
         s.y += s.vy;
         s.vx *= 0.96;
         s.vy *= 0.96;
-        // Tiny idle wander so the field never fully freezes.
-        s.vx += (Math.random() - 0.5) * 0.01 * s.depth;
-        s.vy += (Math.random() - 0.5) * 0.01 * s.depth;
+        s.vx += Math.sin(t * 0.7 + s.twinklePhase) * 0.002 * s.depth;
+        s.vy += Math.cos(t * 0.6 + s.twinklePhase) * 0.002 * s.depth;
 
-        // Wrap horizontally.
         if (s.x < 0) s.x += width;
         if (s.x > width) s.x -= width;
         if (s.y < 0) s.y += height;
         if (s.y > height) s.y -= height;
 
-        // Rendered position: base + scroll parallax (depth) + mouse parallax (depth), wrapped.
         const px = s.x + parallaxX * s.depth;
         const py =
           ((((s.y - scroll.current.y * s.depth * 0.12) % height) + height) % height) +
           parallaxY * s.depth;
         rx[i] = px;
         ry[i] = py;
+
+        const cx = Math.floor(px / GRID_CELL);
+        const cy = Math.floor(py / GRID_CELL);
+        const key = cellKey(cx, cy);
+        const cell = grid.get(key);
+        if (cell) cell.push(i);
+        else grid.set(key, [i]);
       }
 
-      // Connections between nearby stars (constellation lines).
       for (let i = 0; i < stars.length; i++) {
-        for (let j = i + 1; j < stars.length; j++) {
-          const dx = rx[i] - rx[j];
-          const dy = ry[i] - ry[j];
-          const dist = Math.hypot(dx, dy);
-          if (dist < CONNECT) {
-            const depthAvg = (stars[i].depth + stars[j].depth) / 2;
-            const alpha = (1 - dist / CONNECT) * (0.16 + scrollBoost * 0.14) * depthAvg;
-            const hue = (stars[i].hue + stars[j].hue) / 2;
-            ctx.strokeStyle = `hsla(${hue}, 80%, 66%, ${alpha})`;
-            ctx.lineWidth = 0.5 + depthAvg * 0.6;
-            ctx.beginPath();
-            ctx.moveTo(rx[i], ry[i]);
-            ctx.lineTo(rx[j], ry[j]);
-            ctx.stroke();
+        const cx = Math.floor(rx[i] / GRID_CELL);
+        const cy = Math.floor(ry[i] / GRID_CELL);
+
+        for (let ox = -1; ox <= 1; ox++) {
+          for (let oy = -1; oy <= 1; oy++) {
+            const neighbors = grid.get(cellKey(cx + ox, cy + oy));
+            if (!neighbors) continue;
+
+            for (const j of neighbors) {
+              if (j <= i) continue;
+              const dx = rx[i] - rx[j];
+              const dy = ry[i] - ry[j];
+              const dist = Math.hypot(dx, dy);
+              if (dist < CONNECT) {
+                const depthAvg = (stars[i].depth + stars[j].depth) / 2;
+                const alpha = (1 - dist / CONNECT) * (0.16 + scrollBoost * 0.14) * depthAvg;
+                lineBuckets[bucketIndex(alpha)].push(rx[i], ry[i], rx[j], ry[j]);
+              }
+            }
           }
         }
       }
 
-      // Cursor constellation — link the pointer to nearby stars.
+      strokeBuckets(lineBuckets, rx, ry, 200);
+
       if (mouse.current.active) {
         for (let i = 0; i < stars.length; i++) {
           const dx = rx[i] - mouse.current.x;
@@ -215,30 +270,26 @@ export function GradientBackground() {
           const dist = Math.hypot(dx, dy);
           if (dist < CURSOR_RADIUS) {
             const alpha = (1 - dist / CURSOR_RADIUS) * 0.5 * stars[i].depth;
-            ctx.strokeStyle = `hsla(${stars[i].hue}, 90%, 72%, ${alpha})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath();
-            ctx.moveTo(mouse.current.x, mouse.current.y);
-            ctx.lineTo(rx[i], ry[i]);
-            ctx.stroke();
+            const bucket = cursorBuckets[bucketIndex(alpha)];
+            bucket.push(mouse.current.x, mouse.current.y, rx[i], ry[i]);
           }
         }
+        strokeBuckets(cursorBuckets, rx, ry, 200);
       }
 
-      // Stars themselves, with twinkle + depth glow.
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        const twinkle = 0.55 + 0.45 * Math.sin(time * s.twinkleSpeed + s.twinklePhase);
+        const twinkle = 0.55 + 0.45 * Math.sin(t * s.twinkleSpeed + s.twinklePhase);
         const alpha = (0.25 + s.depth * 0.5) * twinkle;
         const size = s.size * (1 + scrollBoost * 0.25);
 
-        // soft glow
-        ctx.fillStyle = `hsla(${s.hue}, 85%, 72%, ${alpha * 0.28})`;
-        ctx.beginPath();
-        ctx.arc(rx[i], ry[i], size * 2.6, 0, Math.PI * 2);
-        ctx.fill();
+        if (s.depth > 0.55) {
+          ctx.fillStyle = `hsla(${s.hue}, 85%, 72%, ${alpha * 0.28})`;
+          ctx.beginPath();
+          ctx.arc(rx[i], ry[i], size * 2.6, 0, Math.PI * 2);
+          ctx.fill();
+        }
 
-        // core
         ctx.fillStyle = `hsla(${s.hue}, 90%, 80%, ${alpha})`;
         ctx.beginPath();
         ctx.arc(rx[i], ry[i], size, 0, Math.PI * 2);
@@ -246,14 +297,22 @@ export function GradientBackground() {
       }
     };
 
-    function loop() {
+    function loop(now: number) {
       if (!running) return;
-      draw();
+
+      const minFrameMs = 1000 / 60;
+      if (now - lastFrame < minFrameMs) {
+        frameId = requestAnimationFrame(loop);
+        return;
+      }
+      lastFrame = now;
+
+      draw(now);
       frameId = requestAnimationFrame(loop);
     }
 
     resize();
-    loop();
+    frameId = requestAnimationFrame(loop);
 
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMove, { passive: true });
@@ -271,22 +330,31 @@ export function GradientBackground() {
       window.removeEventListener("click", onClick);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, []);
+  }, [interactive]);
 
   return (
     <div className="site-gradient" aria-hidden="true">
-      {/* Calm aurora glow, dialed back so the constellation reads as the hero. */}
-      <div className="site-gradient-aurora site-gradient-aurora--primary">
-        <Aurora colorStops={["#0e7490", "#1e3a8a", "#6d28d9"]} amplitude={1.0} blend={0.6} speed={0.6} />
-      </div>
+      {interactive ? (
+        <>
+          <div className="site-gradient-aurora site-gradient-aurora--primary">
+            <Aurora
+              colorStops={["#0e7490", "#1e3a8a", "#6d28d9"]}
+              amplitude={1.3}
+              blend={0.72}
+              speed={0.75}
+            />
+          </div>
+          <canvas ref={canvasRef} className="site-gradient-particles" />
+          <div className="site-gradient-grid site-gradient-grid--animated" />
+        </>
+      ) : (
+        <div className="site-gradient-grid" />
+      )}
 
       <div className="site-gradient-blob site-gradient-blob--one" />
       <div className="site-gradient-blob site-gradient-blob--two" />
       <div className="site-gradient-blob site-gradient-blob--three" />
 
-      <canvas ref={canvasRef} className="site-gradient-particles" />
-
-      <div className="site-gradient-grid site-gradient-grid--animated" />
       <div className="site-gradient-vignette" />
     </div>
   );

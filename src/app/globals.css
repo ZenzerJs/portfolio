@@ -89,8 +89,8 @@ body {
 }
 
 .site-gradient-aurora--primary {
-  opacity: 0.4;
-  filter: saturate(1.1) brightness(0.9);
+  opacity: 0.58;
+  filter: saturate(1.25) brightness(1.08);
 }
 
 .site-gradient-blob {

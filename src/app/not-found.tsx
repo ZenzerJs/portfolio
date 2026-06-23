@@ -5,7 +5,7 @@ import { GradientBackground } from "@/components/layout/GradientBackground";
 export default function NotFound() {
   return (
     <div className="site-page relative flex min-h-screen items-center justify-center px-5">
-      <GradientBackground />
+      <GradientBackground interactive={false} />
       <div className="relative z-10 text-center">
         <p className="text-7xl font-bold text-accent/30 sm:text-8xl">404</p>
         <h1 className="mt-4 text-2xl font-semibold sm:text-3xl">Page not found</h1>

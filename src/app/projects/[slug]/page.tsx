@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
   const project = getProjectBySlug(slug);
   if (!project) return {};
   return {
-    title: `${project.title} — Jayden Saha`,
+    title: project.title,
     description: project.oneLiner,
   };
 }

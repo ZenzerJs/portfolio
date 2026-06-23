@@ -18,7 +18,7 @@ const structuredData = {
   name: profile.name,
   url: siteConfig.url.toString(),
   jobTitle: "IT Operations",
-  email: `mailto:${profile.email}`,
+  email: profile.email,
   sameAs: [links.github, links.linkedin],
 };
 

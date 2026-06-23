@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getFeaturedProjects } from "@/content/projects";
+import { getHomepageProjects } from "@/content/projects";
 import { ProjectCard } from "@/components/ProjectCard";
 
 export function FeaturedProjects() {
-  const featured = getFeaturedProjects().slice(0, 4);
+  const featured = getHomepageProjects();
 
   return (
     <div>
