@@ -65,7 +65,7 @@ export function EducationSection({
                       target="_blank"
                       rel="noopener noreferrer"
                       title={`${course.label} on Bohr`}
-                      className={`chip transition-colors hover:border-[var(--accent)] hover:text-accent ${
+                      className={`chip chip--link ${
                         course.status === "in-progress" ? "chip--warm" : ""
                       }`}
                     >
@@ -84,11 +84,11 @@ export function EducationSection({
                       href={course.calendarUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-muted transition-colors hover:text-accent"
+                      className="chip chip--link chip--violet"
                       aria-label={`${course.code} Laurier academic calendar`}
                     >
                       Calendar
-                      <ExternalLink size={12} aria-hidden="true" />
+                      <ExternalLink size={13} aria-hidden="true" className="ml-1.5" />
                     </a>
                   ) : null}
                 </div>

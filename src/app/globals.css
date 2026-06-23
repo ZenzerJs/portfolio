@@ -12,7 +12,7 @@
   --violet: #a78bfa;
   --violet-soft: rgba(167, 139, 250, 0.12);
   --warm: #fb923c;
-  --sidebar-width: 16rem;
+  --sidebar-width: 17.5rem;
   --radius-card: 1.75rem;
   --radius-btn: 9999px;
   --radius-chip: 9999px;
@@ -324,6 +324,12 @@ body {
   color: var(--muted);
 }
 
+.sidebar-availability {
+  white-space: nowrap;
+  font-size: 0.72rem;
+  letter-spacing: -0.01em;
+}
+
 .sidebar-socials {
   display: flex;
   gap: 0.75rem;
@@ -578,6 +584,38 @@ body {
 
 .chip:hover {
   transform: translateY(-2px);
+}
+
+.chip--link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.05rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.chip--link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(45, 212, 191, 0.55);
+  color: var(--accent);
+  box-shadow: 0 4px 22px rgba(45, 212, 191, 0.32);
+}
+
+.chip--link.chip--warm:hover {
+  border-color: rgba(251, 146, 60, 0.6);
+  color: #fed7aa;
+  box-shadow: 0 4px 22px rgba(251, 146, 60, 0.32);
+}
+
+.chip--link.chip--violet:hover {
+  border-color: rgba(167, 139, 250, 0.6);
+  color: #ddd6fe;
+  box-shadow: 0 4px 22px rgba(167, 139, 250, 0.32);
 }
 
 .chip--teal {

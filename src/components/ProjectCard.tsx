@@ -23,13 +23,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="relative z-10 mb-4 flex items-start justify-between gap-3">
         <span className="chip text-accent">{statusLabel}</span>
-        <div className="pointer-events-auto flex items-center gap-2">
+        <div className="pointer-events-auto flex items-center gap-1">
           {project.repoUrl && (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative z-20 text-muted transition-colors hover:text-accent"
+              className="relative z-20 inline-flex min-h-11 min-w-11 items-center justify-center text-muted transition-colors hover:text-accent"
               aria-label={`${project.title} repository`}
             >
               <Github size={16} />
@@ -40,7 +40,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative z-20 text-muted transition-colors hover:text-accent"
+              className="relative z-20 inline-flex min-h-11 min-w-11 items-center justify-center text-muted transition-colors hover:text-accent"
               aria-label={`${project.title} live demo`}
             >
               <ExternalLink size={16} />

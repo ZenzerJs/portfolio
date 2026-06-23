@@ -61,9 +61,12 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
   const scroll = useRef({ y: 0, velocity: 0 });
   const [auroraReady, setAuroraReady] = useState(false);
 
-  // Defer Aurora until after first paint + idle — keeps ogl off the critical path
+  // Defer Aurora until after first paint + idle — skip on touch devices (WebGL is costly on mobile)
   useEffect(() => {
     if (!interactive) return;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    if (coarse) return;
+
     const ric = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1500));
     const id = ric(() => setAuroraReady(true));
     return () => {
@@ -80,6 +83,8 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
+
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
@@ -313,7 +318,8 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
     function loop(now: number) {
       if (!running) return;
 
-      const minFrameMs = 1000 / 60;
+      const targetFps = coarsePointer ? 30 : 60;
+      const minFrameMs = 1000 / targetFps;
       if (now - lastFrame < minFrameMs) {
         frameId = requestAnimationFrame(loop);
         return;
@@ -328,19 +334,23 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
     frameId = requestAnimationFrame(loop);
 
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mouseleave", onLeave);
+    if (!coarsePointer) {
+      window.addEventListener("mousemove", onMove, { passive: true });
+      window.addEventListener("mouseleave", onLeave);
+      window.addEventListener("click", onClick);
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("click", onClick);
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseleave", onLeave);
+      if (!coarsePointer) {
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseleave", onLeave);
+        window.removeEventListener("click", onClick);
+      }
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("click", onClick);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [interactive]);
