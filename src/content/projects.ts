@@ -8,6 +8,7 @@ export interface EmbedConfig {
   type: "iframe" | "video" | "component";
   src: string;
   title?: string;
+  height?: number;
 }
 
 export interface Project {
@@ -142,7 +143,13 @@ export const projects: Project[] = [
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Mapbox", "Vercel"],
     repoUrl: "https://github.com/ZenzerJs/wc26-travel-mapper",
     liveUrl: "https://wc26-travel-mapper.vercel.app/",
-    showcaseTier: "standard",
+    showcaseTier: "spotlight",
+    embed: {
+      type: "iframe",
+      src: "https://wc26-travel-mapper.vercel.app/",
+      title: "WC26 Travel Mapper",
+      height: 560,
+    },
     highlights: [
       "Interactive Mapbox map with satellite and streets view toggling",
       "Route planning between FIFA World Cup host cities in Canada, the U.S., and Mexico",

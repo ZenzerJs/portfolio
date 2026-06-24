@@ -15,7 +15,7 @@ function DemoEmbed({ embed }: { embed: EmbedConfig }) {
         src={embed.src}
         title={embed.title || "Interactive demo"}
         className="w-full rounded-2xl border border-white/10"
-        style={{ height: "500px" }}
+        style={{ height: embed.height ?? 500 }}
         loading="lazy"
         sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
