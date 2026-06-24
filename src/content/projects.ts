@@ -30,7 +30,7 @@ export interface Project {
 export const HOMEPAGE_SLUGS = [
   "ml-stock-simulator",
   "omni-architect",
-  "geometry-dash-ai",
+  "wc26-travel-mapper",
   "scholars-spark",
 ] as const;
 
@@ -130,6 +130,32 @@ export const projects: Project[] = [
       "User interface connecting students with academic resources",
       "Iterative prototyping workflow with weekly deliverables and QA cycles",
       "Final polished presentation delivered to industry professionals",
+    ],
+  },
+  {
+    slug: "wc26-travel-mapper",
+    title: "WC26 Travel Mapper",
+    oneLiner:
+      "Full-stack World Cup travel planner for exploring routes between 2026 host cities across North America — interactive maps, route-aware POI discovery, and flight suggestions for longer trips.",
+    category: "featured",
+    status: "shipped",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Mapbox", "Vercel"],
+    repoUrl: "https://github.com/ZenzerJs/wc26-travel-mapper",
+    liveUrl: "https://wc26-travel-mapper.vercel.app/",
+    showcaseTier: "standard",
+    highlights: [
+      "Interactive Mapbox map with satellite and streets view toggling",
+      "Route planning between FIFA World Cup host cities in Canada, the U.S., and Mexico",
+      "Driving and walking route visualization with multi-city travel exploration",
+      "Route-aware POI discovery for restaurants, hotels, gas stations, and attractions",
+      "Flight suggestion flow for longer-distance trips between host cities",
+      "Deployed on Vercel with environment variable setup and third-party API debugging",
+    ],
+    whatIBuilt: [
+      "Next.js app with Mapbox GL JS and react-map-gl for interactive route visualization",
+      "Directions and place-search integrations via RapidAPI and Foursquare Places API",
+      "Responsive map-based UI with satellite/street view switching and POI filtering",
+      "Production deployment on Vercel with API key management and integration debugging",
     ],
   },
   {

@@ -30,7 +30,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       <GradientBackground interactive={false} />
       <SidebarNav />
 
-      <main className="site-main min-h-screen pb-16 pt-24 lg:pt-10">
+      <main id="main-content" className="site-main min-h-screen pb-16 pt-24 lg:pt-10">
         <div className="page-container max-w-3xl">
           <Link
             href="/projects"

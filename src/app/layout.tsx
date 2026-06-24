@@ -33,11 +33,17 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: siteConfig.title,
     description: siteConfig.description,
     type: "website",
     locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
@@ -61,6 +67,9 @@ export default function RootLayout({
       className={`h-full antialiased ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${syne.variable}`}
     >
       <body suppressHydrationWarning className="min-h-full w-full bg-background text-foreground">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>

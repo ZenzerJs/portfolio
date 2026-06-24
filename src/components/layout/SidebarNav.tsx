@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import { useCallback, useEffect, useId, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import { links, navSections, profile } from "@/data/portfolio";
+
+const MENU_PANEL_ID = "mobile-menu-panel";
 
 function resolveActiveSection(sections: HTMLElement[]) {
   const activationLine = 120;
@@ -25,12 +26,15 @@ export function SidebarNav() {
   const isHome = pathname === "/";
   const [activeId, setActiveId] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonId = useId();
 
   const sectionHref = (id: string) => (isHome ? `#${id}` : `/#${id}`);
 
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
   const scrollToSection = useCallback(
     (id: string) => {
-      setMenuOpen(false);
+      closeMenu();
       if (!isHome) {
         window.location.href = `/#${id}`;
         return;
@@ -40,7 +44,7 @@ export function SidebarNav() {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
       window.history.replaceState(null, "", `#${id}`);
     },
-    [isHome],
+    [isHome, closeMenu],
   );
 
   useEffect(() => {
@@ -56,6 +60,23 @@ export function SidebarNav() {
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, [isHome]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenu();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen, closeMenu]);
 
   const navLinks = (
     <>
@@ -79,6 +100,36 @@ export function SidebarNav() {
     </>
   );
 
+  const socialLinks = (
+    <div className="flex gap-2">
+      <a
+        href={links.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center text-muted hover:text-accent"
+      >
+        <Github size={18} />
+      </a>
+      <a
+        href={links.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center text-muted hover:text-accent"
+      >
+        <Linkedin size={18} />
+      </a>
+      <a
+        href={`mailto:${profile.email}`}
+        aria-label="Email"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center text-muted hover:text-accent"
+      >
+        <Mail size={18} />
+      </a>
+    </div>
+  );
+
   return (
     <>
       <header className="mobile-nav lg:hidden">
@@ -87,8 +138,11 @@ export function SidebarNav() {
           <p className="sidebar-name text-base">{profile.name}</p>
         </div>
         <button
+          id={menuButtonId}
           type="button"
           aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls={MENU_PANEL_ID}
           onClick={() => setMenuOpen((open) => !open)}
           className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-muted hover:text-foreground"
         >
@@ -97,19 +151,19 @@ export function SidebarNav() {
       </header>
 
       {menuOpen ? (
-        <div className="mobile-menu-panel lg:hidden">
-          <nav className="sidebar-nav !mt-0">{navLinks}</nav>
-          <div className="mt-6 flex gap-2">
-            <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="inline-flex min-h-11 min-w-11 items-center justify-center text-muted hover:text-accent">
-              <Github size={18} />
-            </a>
-            <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="inline-flex min-h-11 min-w-11 items-center justify-center text-muted hover:text-accent">
-              <Linkedin size={18} />
-            </a>
-            <a href={`mailto:${profile.email}`} aria-label="Email" className="inline-flex min-h-11 min-w-11 items-center justify-center text-muted hover:text-accent">
-              <Mail size={18} />
-            </a>
-          </div>
+        <div id={MENU_PANEL_ID} className="mobile-menu-panel lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+          <nav className="sidebar-nav !mt-0" aria-label="Primary">
+            {navLinks}
+          </nav>
+          <div className="mt-6">{socialLinks}</div>
+          <a
+            href={links.resume}
+            download="Jayden_Saha_Resume.pdf"
+            className="btn-ghost mt-4 w-full text-xs"
+            onClick={closeMenu}
+          >
+            Resume
+          </a>
         </div>
       ) : null}
 
@@ -119,15 +173,17 @@ export function SidebarNav() {
           <p className="sidebar-name">{profile.name}</p>
         </div>
 
-        <nav className="sidebar-nav">{navLinks}</nav>
+        <nav className="sidebar-nav" aria-label="Primary">
+          {navLinks}
+        </nav>
 
         <div className="sidebar-footer">
           <p className="sidebar-availability">{profile.availability}</p>
           <div className="sidebar-socials">
-            <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+            <a href={links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <Github size={16} />
             </a>
-            <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <a href={links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <Linkedin size={16} />
             </a>
             <a href={`mailto:${profile.email}`} aria-label="Email">

@@ -17,7 +17,7 @@ const structuredData = {
   "@type": "Person",
   name: profile.name,
   url: siteConfig.url.toString(),
-  jobTitle: "IT Operations",
+  jobTitle: profile.role.split("·")[0]?.trim() ?? "IT Operations",
   email: profile.email,
   sameAs: [links.github, links.linkedin],
 };
@@ -28,7 +28,7 @@ export default function HomePage() {
       <GradientBackground />
       <SidebarNav />
 
-      <main className="site-main">
+      <main id="main-content" className="site-main">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

@@ -27,14 +27,14 @@ export function ContactSection() {
           <a
             href={links.linkedin}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="btn-ghost"
           >
             <Linkedin size={16} />
             LinkedIn
             <ArrowUpRight size={14} />
           </a>
-          <a href={links.github} target="_blank" rel="noreferrer" className="btn-ghost">
+          <a href={links.github} target="_blank" rel="noopener noreferrer" className="btn-ghost">
             <Github size={16} />
             GitHub
             <ArrowUpRight size={14} />
