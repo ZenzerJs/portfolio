@@ -32,7 +32,7 @@ export const HOMEPAGE_SLUGS = [
   "ml-stock-simulator",
   "omni-architect",
   "wc26-travel-mapper",
-  "scholars-spark",
+  "stock-analyst-agent",
 ] as const;
 
 export const projects: Project[] = [
