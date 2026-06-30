@@ -67,6 +67,37 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "stock-analyst-agent",
+    title: "Stock Analyst Agent",
+    oneLiner:
+      "AI stock research desk with LangGraph — live quotes, analyst consensus, 8-quarter fundamentals cache, and persistent chat with source-linked reasoning.",
+    category: "featured",
+    status: "shipped",
+    tags: ["Python", "FastAPI", "LangGraph", "React", "Vercel"],
+    repoUrl: "https://github.com/ZenzerJs/stock-analyst-agent",
+    liveUrl: "https://stock-analyst-agent-ashen.vercel.app/",
+    showcaseTier: "spotlight",
+    embed: {
+      type: "iframe",
+      src: "https://stock-analyst-agent-ashen.vercel.app/",
+      title: "Stock Analyst Agent",
+      height: 560,
+    },
+    highlights: [
+      "LangGraph agent with tools for fundamentals, live price, sentiment, and earnings",
+      "Research desk UI — sidebar charts, full-screen markets view, and persistent chat history",
+      "8-quarter fundamentals cache with trusted outbound links to Yahoo Finance and SEC EDGAR",
+      "Groq and Gemini LLM routing with Finnhub integration for quotes and analyst ratings",
+      "FastAPI backend with SQLite cache; Vite + React frontend deployed on Vercel",
+    ],
+    whatIBuilt: [
+      "FastAPI + LangGraph agent orchestrating four market-data tools",
+      "SQLite-backed fundamentals ingest and chat session persistence",
+      "React research desk with agent reasoning steps and source citations",
+      "Production deployment on Vercel (frontend) with documented Render/Railway backend setup",
+    ],
+  },
+  {
     slug: "omni-architect",
     title: "Omni Architect",
     oneLiner:
