@@ -170,6 +170,9 @@ export const skillGroups = [
       "LangChain",
       "LangGraph",
       "Tailwind CSS",
+      "MediaPipe",
+      "PixiJS",
+      "Matter.js",
     ],
   },
   {

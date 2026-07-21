@@ -29,6 +29,7 @@ export interface Project {
 }
 
 export const HOMEPAGE_SLUGS = [
+  "arcane-hand-casting",
   "ml-stock-simulator",
   "omni-architect",
   "wc26-travel-mapper",
@@ -36,6 +37,33 @@ export const HOMEPAGE_SLUGS = [
 ] as const;
 
 export const projects: Project[] = [
+  {
+    slug: "arcane-hand-casting",
+    title: "Arcane Handcasting",
+    oneLiner:
+      "Browser spell sandbox where webcam-tracked hand geometry creates, charges, aims, and releases magic — no controllers, no buttons.",
+    category: "featured",
+    status: "shipped",
+    tags: ["Next.js", "TypeScript", "MediaPipe", "PixiJS", "Matter.js", "Computer Vision"],
+    repoUrl: "https://github.com/ZenzerJs/Arcane-Hand-Casting",
+    showcaseTier: "spotlight",
+    highlights: [
+      "Three gesture-driven spells — Void Singularity, Storm Weave lightning, and Aegis Ward rune shield",
+      "MediaPipe Hand Landmarker for real-time hand geometry tracking in the browser",
+      "PixiJS renderer with particle effects, lightning arcs, and black-hole distortion",
+      "Matter.js physics for wisp drift, hazard bolts, and collision detection",
+      "Wave-based trial arena with score, lives, and escalating difficulty",
+      "First-run tutorial and calibration flow for new players",
+      "All webcam processing runs locally — no video uploaded or stored",
+    ],
+    whatIBuilt: [
+      "Gesture recognition pipeline translating hand landmarks into spell state machines",
+      "PixiJS spell renderers — singularity vortex, five-arc lightning, rotating rune ward",
+      "Wave-spawning trial mode with score tracking, lives system, and hazard AI",
+      "Vision quality monitor with FPS and inference-ms debug overlay on /sandbox",
+      "Next.js app with TypeScript, Tailwind, and Vercel deployment",
+    ],
+  },
   {
     slug: "ml-stock-simulator",
     title: "ML Stock Simulator",
