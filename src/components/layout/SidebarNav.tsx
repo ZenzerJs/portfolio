@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import { links, navSections, profile } from "@/data/portfolio";
@@ -26,10 +26,14 @@ export function SidebarNav() {
   const isHome = pathname === "/";
   const [activeId, setActiveId] = useState("top");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pillY, setPillY] = useState(0);
+  const [pillH, setPillH] = useState(42);
+  const [pillReady, setPillReady] = useState(false);
   const menuButtonId = useId();
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const navRef = useRef<HTMLElement>(null);
 
   const sectionHref = (id: string) => (isHome ? `#${id}` : `/#${id}`);
-
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   const scrollToSection = useCallback(
@@ -47,6 +51,15 @@ export function SidebarNav() {
     [isHome, closeMenu],
   );
 
+  /* Move pill with transform only — no layoutId / spring */
+  const syncPill = useCallback((id: string) => {
+    const link = linkRefs.current.get(id);
+    if (!link) return;
+    setPillY(link.offsetTop);
+    setPillH(link.offsetHeight);
+    setPillReady(true);
+  }, []);
+
   useEffect(() => {
     if (!isHome) return;
 
@@ -55,11 +68,32 @@ export function SidebarNav() {
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
 
-    const update = () => setActiveId(resolveActiveSection(sections));
+    let ticking = false;
+    const update = () => {
+      const next = resolveActiveSection(sections);
+      setActiveId((prev) => (prev === next ? prev : next));
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
     update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
+
+  useEffect(() => {
+    syncPill(activeId);
+  }, [activeId, syncPill]);
+
+  useEffect(() => {
+    const onResize = () => syncPill(activeId);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, [activeId, syncPill]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -78,7 +112,7 @@ export function SidebarNav() {
     };
   }, [menuOpen, closeMenu]);
 
-  const navLinks = (
+  const renderNavLinks = (desktop = false) => (
     <>
       {navSections.map(({ id, label }) => {
         const isActive = isHome && activeId === id;
@@ -86,11 +120,19 @@ export function SidebarNav() {
           <a
             key={id}
             href={sectionHref(id)}
+            ref={
+              desktop
+                ? (node) => {
+                    if (node) linkRefs.current.set(id, node);
+                    else linkRefs.current.delete(id);
+                  }
+                : undefined
+            }
             onClick={(event) => {
               event.preventDefault();
               scrollToSection(id);
             }}
-            className={`sidebar-link ${isActive ? "is-active" : ""}`}
+            className={`sidebar-link ${desktop ? "has-pill" : ""} ${isActive ? "is-active" : ""}`}
           >
             <span className="sidebar-link-dot" aria-hidden="true" />
             {label}
@@ -151,9 +193,15 @@ export function SidebarNav() {
       </header>
 
       {menuOpen ? (
-        <div id={MENU_PANEL_ID} className="mobile-menu-panel lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div
+          id={MENU_PANEL_ID}
+          className="mobile-menu-panel lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+        >
           <nav className="sidebar-nav !mt-0" aria-label="Primary">
-            {navLinks}
+            {renderNavLinks()}
           </nav>
           <div className="mt-6">{socialLinks}</div>
           <a
@@ -173,8 +221,18 @@ export function SidebarNav() {
           <p className="sidebar-name">{profile.name}</p>
         </div>
 
-        <nav className="sidebar-nav" aria-label="Primary">
-          {navLinks}
+        <nav ref={navRef} className="sidebar-nav" aria-label="Primary">
+          {isHome ? (
+            <span
+              className={`sidebar-pill ${pillReady ? "is-ready" : ""}`}
+              style={{
+                height: pillH,
+                transform: `translate3d(0, ${pillY}px, 0)`,
+              }}
+              aria-hidden="true"
+            />
+          ) : null}
+          {renderNavLinks(true)}
         </nav>
 
         <div className="sidebar-footer">

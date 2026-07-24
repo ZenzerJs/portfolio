@@ -1,8 +1,14 @@
 "use client";
 
+import { type PointerEvent } from "react";
 import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
-import { motion } from "motion/react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "motion/react";
 import type { Project } from "@/content/projects";
 
 interface ProjectCardProps {
@@ -10,17 +16,53 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const rotateXValue = useMotionValue(0);
+  const rotateYValue = useMotionValue(0);
+  const rotateX = useSpring(rotateXValue, {
+    stiffness: 260,
+    damping: 24,
+    mass: 0.5,
+  });
+  const rotateY = useSpring(rotateYValue, {
+    stiffness: 260,
+    damping: 24,
+    mass: 0.5,
+  });
+
   const statusLabel = {
     shipped: "Shipped",
     "in-progress": "In progress",
     comingSoon: "Coming soon",
   }[project.status];
 
+  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
+    if (shouldReduceMotion || event.pointerType !== "mouse") return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
+    const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
+    rotateXValue.set(normalizedY * -8);
+    rotateYValue.set(normalizedX * 8);
+  };
+
+  const resetTilt = () => {
+    rotateXValue.set(0);
+    rotateYValue.set(0);
+  };
+
   return (
     <motion.article
       className="glass-card group relative p-6"
       whileHover={{ y: -6, scale: 1.015 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
+      style={{
+        rotateX: shouldReduceMotion ? 0 : rotateX,
+        rotateY: shouldReduceMotion ? 0 : rotateY,
+        transformPerspective: 900,
+        transformStyle: "preserve-3d",
+      }}
     >
       <Link
         href={`/projects/${project.slug}`}

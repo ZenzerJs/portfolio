@@ -155,6 +155,7 @@ body {
   width: 100%;
   height: 100%;
   opacity: 1;
+  transition: opacity 900ms ease;
   mix-blend-mode: screen;
 }
 
@@ -237,13 +238,15 @@ body {
   }
 
   .site-main {
+    /* Must subtract sidebar — width:100% + margin-left overflows by sidebar width */
     margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
   }
 }
 
 .page-container {
   width: 100%;
-  max-width: 62rem;
+  max-width: 72rem;
   margin-inline: auto;
   padding-inline: 1.25rem;
 }
@@ -251,6 +254,14 @@ body {
 @media (min-width: 640px) {
   .page-container {
     padding-inline: 2rem;
+  }
+}
+
+/* Desktop: fill the main column after sidebar (1920 → main ≈ 1640px) */
+@media (min-width: 1024px) {
+  .page-container {
+    max-width: 100%;
+    padding-inline: clamp(2rem, 3.5vw, 3.25rem);
   }
 }
 
@@ -264,9 +275,11 @@ body {
   width: var(--sidebar-width);
   flex-direction: column;
   border-right: 1px solid rgba(52, 211, 153, 0.12);
-  background: rgba(8, 11, 18, 0.72);
-  backdrop-filter: blur(20px);
+  /* Solid-ish bg — backdrop-filter blur is a major scroll jank source over WebGL */
+  background: rgba(8, 11, 18, 0.94);
   padding: 1.5rem 1.25rem;
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 .sidebar-brand {
@@ -288,6 +301,7 @@ body {
 }
 
 .sidebar-nav {
+  position: relative;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
@@ -295,6 +309,8 @@ body {
 }
 
 .sidebar-link {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -315,11 +331,43 @@ body {
   transform: translateX(3px);
 }
 
-.sidebar-link.is-active {
+.sidebar-link.is-active:not(.has-pill) {
   background: linear-gradient(90deg, var(--accent-soft), transparent);
   color: var(--accent);
   border-left: 2px solid var(--accent);
   padding-left: calc(0.75rem - 2px);
+}
+
+.sidebar-link.has-pill.is-active {
+  color: var(--accent);
+}
+
+.sidebar-link.has-pill:hover {
+  background: transparent;
+}
+
+/* Single pill — transform only, GPU friendly */
+.sidebar-pill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border: 1px solid rgba(45, 212, 191, 0.2);
+  border-radius: var(--radius-chip);
+  background: linear-gradient(
+    90deg,
+    rgba(45, 212, 191, 0.16),
+    rgba(139, 92, 246, 0.08)
+  );
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.sidebar-pill.is-ready {
+  opacity: 1;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), opacity 150ms ease;
 }
 
 .sidebar-link-dot {
@@ -402,6 +450,21 @@ body {
   padding: 1.25rem;
 }
 
+/* ── Scroll progress (top bar) ── */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: 2px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--accent), var(--violet), var(--warm));
+  pointer-events: none;
+  will-change: transform;
+}
+
 /* ── Marquee ── */
 
 .marquee-wrap {
@@ -415,12 +478,17 @@ body {
     rgba(34, 197, 94, 0.08)
   );
   padding-block: 1rem;
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 22s linear infinite;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .marquee-item {
@@ -523,7 +591,7 @@ body {
   border: 1px solid rgba(52, 211, 153, 0.12);
   border-radius: var(--radius-card);
   background: linear-gradient(145deg, rgba(15, 23, 42, 0.65), rgba(8, 11, 18, 0.45));
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
   transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
   overflow: hidden;
 }
@@ -738,7 +806,9 @@ body {
 
 .hero-title-line {
   display: block;
-  font-size: clamp(3rem, 11vw, 6.5rem);
+  width: fit-content;
+  max-width: 100%;
+  font-size: clamp(3rem, 8.5vw, 6.25rem);
   color: #e2e8f0;
   text-shadow: 0 0 40px rgba(148, 163, 184, 0.15);
 }
@@ -917,7 +987,9 @@ body {
 }
 
 /* Firefox */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) transparent;
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+  }
 }

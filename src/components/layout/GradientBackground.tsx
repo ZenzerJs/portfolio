@@ -330,8 +330,19 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
       frameId = requestAnimationFrame(loop);
     }
 
-    resize();
-    frameId = requestAnimationFrame(loop);
+    // Defer canvas boot until after the hero entrance has main-thread priority
+    let startTimer = 0;
+    canvas.style.opacity = "0";
+    const start = () => {
+      resize();
+      frameId = requestAnimationFrame(loop);
+      canvas.style.opacity = "1";
+    };
+    if (window.requestIdleCallback) {
+      startTimer = window.requestIdleCallback(start, { timeout: 1200 }) as unknown as number;
+    } else {
+      startTimer = window.setTimeout(start, 900);
+    }
 
     window.addEventListener("resize", resize);
     if (!coarsePointer) {
@@ -344,6 +355,8 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
 
     return () => {
       cancelAnimationFrame(frameId);
+      if (window.cancelIdleCallback) window.cancelIdleCallback(startTimer);
+      else clearTimeout(startTimer);
       window.removeEventListener("resize", resize);
       if (!coarsePointer) {
         window.removeEventListener("mousemove", onMove);

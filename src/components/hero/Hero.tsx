@@ -1,105 +1,106 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { heroFocus, links, profile } from "@/data/portfolio";
 import { Marquee } from "@/components/ui/Marquee";
+import { BlurRevealText } from "@/components/ui/BlurRevealText";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 const [firstName, lastName] = profile.name.split(" ");
 
-/* Shared ease — snappy deceleration */
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.65]);
+
   return (
-    <section id="top" className="hero-section pt-20 lg:pt-6">
+    <section ref={sectionRef} id="top" className="hero-section pt-20 lg:pt-6">
       <Marquee />
 
-      <div className="page-container hero-inner pb-20 pt-14 sm:pb-24 sm:pt-20">
-        {/* ── Availability Badge ── */}
+      <motion.div
+        className="page-container hero-inner pb-16 pt-10 sm:pb-20 sm:pt-14 lg:pt-16"
+        style={{
+          y: shouldReduceMotion ? 0 : heroY,
+          opacity: shouldReduceMotion ? 1 : heroOpacity,
+        }}
+      >
         {profile.available ? (
           <motion.div
-            className="badge-pill mb-8"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.1, ease }}
+            className="badge-pill mb-6"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.05, ease }}
           >
             <span className="badge-dot" aria-hidden="true" />
             {profile.availability}
           </motion.div>
         ) : null}
 
-        {/* ── Role Kicker ── */}
         <motion.p
           className="hero-kicker"
-          initial={{ opacity: 0, x: -16 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.45, delay: 0.2, ease }}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.12, ease }}
         >
           {profile.role}
         </motion.p>
 
-        {/* ── Title: First + Last name ── */}
+        {/* Continuous blur across both lines — same start window, slight stagger */}
         <h1 className="hero-title">
-          <motion.span
-            className="hero-title-line"
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease }}
-          >
-            {firstName}
-          </motion.span>
-          <motion.span
+          <BlurRevealText text={firstName} className="hero-title-line" delay={0.18} />
+          <BlurRevealText
+            text={lastName}
             className="hero-title-line hero-title-line--glow"
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.38, ease }}
-          >
-            {lastName}
-          </motion.span>
+            delay={0.28}
+          />
         </h1>
 
-        {/* ── Tagline ── */}
         <motion.p
           className="hero-tagline mt-6 max-w-2xl"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.5, ease }}
+          transition={{ duration: 0.4, delay: 0.55, ease }}
         >
           {profile.tagline}
         </motion.p>
 
-        {/* ── Intro ── */}
         <motion.p
-          className="hero-intro mt-5 max-w-xl"
-          initial={{ opacity: 0, y: 12 }}
+          className="hero-intro mt-4 max-w-xl"
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.58, ease }}
+          transition={{ duration: 0.4, delay: 0.62, ease }}
         >
           {profile.intro}
         </motion.p>
 
-        {/* ── Focus Chips (staggered) ── */}
         <motion.ul
-          className="mt-8 flex flex-wrap gap-2.5"
+          className="mt-7 flex flex-wrap gap-2.5"
           initial="hidden"
           animate="show"
           variants={{
             hidden: {},
-            show: { transition: { staggerChildren: 0.05, delayChildren: 0.68 } },
+            show: { transition: { staggerChildren: 0.04, delayChildren: 0.7 } },
           }}
         >
           {heroFocus.map((item, i) => (
             <motion.li
               key={item}
               variants={{
-                hidden: { opacity: 0, y: 10, scale: 0.92 },
+                hidden: { opacity: 0, y: 8 },
                 show: {
                   opacity: 1,
                   y: 0,
-                  scale: 1,
-                  transition: { duration: 0.35, ease },
+                  transition: { duration: 0.3, ease },
                 },
               }}
             >
@@ -112,23 +113,30 @@ export function Hero() {
           ))}
         </motion.ul>
 
-        {/* ── Action Buttons ── */}
         <motion.div
-          className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
-          initial={{ opacity: 0, y: 16 }}
+          className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.9, ease }}
+          transition={{ duration: 0.4, delay: 0.85, ease }}
         >
-          <Link href="#works" className="btn-primary">
-            View projects
-            <ArrowRight size={18} strokeWidth={2.5} />
-          </Link>
-          <a href={links.resume} download="Jayden_Saha_Resume.pdf" className="btn-ghost">
-            <Download size={18} strokeWidth={2.5} />
-            Download resume
-          </a>
+          <Magnetic className="flex">
+            <Link href="#works" className="btn-primary w-full sm:w-auto">
+              View projects
+              <ArrowRight size={18} strokeWidth={2.5} />
+            </Link>
+          </Magnetic>
+          <Magnetic className="flex">
+            <a
+              href={links.resume}
+              download="Jayden_Saha_Resume.pdf"
+              className="btn-ghost w-full sm:w-auto"
+            >
+              <Download size={18} strokeWidth={2.5} />
+              Download resume
+            </a>
+          </Magnetic>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

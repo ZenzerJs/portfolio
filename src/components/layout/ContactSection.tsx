@@ -1,5 +1,6 @@
 import { links, profile } from "@/data/portfolio";
 import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 export function ContactSection() {
   return (
@@ -20,10 +21,15 @@ export function ContactSection() {
         <p className="display-heading text-2xl sm:text-4xl">{profile.email}</p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href={`mailto:${profile.email}`} className="btn-primary">
-            <Mail size={16} />
-            Send email
-          </a>
+          <Magnetic className="flex">
+            <a
+              href={`mailto:${profile.email}`}
+              className="btn-primary w-full sm:w-auto"
+            >
+              <Mail size={16} />
+              Send email
+            </a>
+          </Magnetic>
           <a
             href={links.linkedin}
             target="_blank"
