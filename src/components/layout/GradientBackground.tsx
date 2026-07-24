@@ -67,11 +67,20 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     if (coarse) return;
 
-    const ric = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1500));
-    const id = ric(() => setAuroraReady(true));
+    let idleId = 0;
+    const arm = () => {
+      const ric =
+        window.requestIdleCallback ??
+        ((cb: IdleRequestCallback) => setTimeout(() => cb({} as IdleDeadline), 2200) as unknown as number);
+      idleId = ric(() => setAuroraReady(true), { timeout: 3200 }) as unknown as number;
+    };
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
+
     return () => {
-      if (window.cancelIdleCallback) window.cancelIdleCallback(id as number);
-      else clearTimeout(id as number);
+      window.removeEventListener("load", arm);
+      if (window.cancelIdleCallback) window.cancelIdleCallback(idleId);
+      else clearTimeout(idleId);
     };
   }, [interactive]);
 
@@ -102,17 +111,22 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
 
     const lineBuckets: number[][] = Array.from({ length: ALPHA_BUCKETS }, () => []);
     const cursorBuckets: number[][] = Array.from({ length: ALPHA_BUCKETS }, () => []);
+    let rx: number[] = [];
+    let ry: number[] = [];
 
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      // Cap DPR — same look, less fill work on retina
+      dpr = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1 : 1.25);
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       stars = createStars(targetCount(width, height), width, height);
+      rx = new Array(stars.length);
+      ry = new Array(stars.length);
     };
 
     const onMove = (e: MouseEvent) => {
@@ -205,8 +219,6 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
       const scrollBoost = Math.min(Math.abs(scroll.current.velocity) / 40, 1);
       const t = time * 0.001;
 
-      const rx: number[] = new Array(stars.length);
-      const ry: number[] = new Array(stars.length);
       const grid = new Map<string, number[]>();
 
       const cellKey = (cx: number, cy: number) => `${cx},${cy}`;
@@ -330,7 +342,7 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
       frameId = requestAnimationFrame(loop);
     }
 
-    // Defer canvas boot until after the hero entrance has main-thread priority
+    // Defer canvas until after load + idle so LCP/TBT stay cleaner
     let startTimer = 0;
     canvas.style.opacity = "0";
     const start = () => {
@@ -338,11 +350,15 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
       frameId = requestAnimationFrame(loop);
       canvas.style.opacity = "1";
     };
-    if (window.requestIdleCallback) {
-      startTimer = window.requestIdleCallback(start, { timeout: 1200 }) as unknown as number;
-    } else {
-      startTimer = window.setTimeout(start, 900);
-    }
+    const armCanvas = () => {
+      if (window.requestIdleCallback) {
+        startTimer = window.requestIdleCallback(start, { timeout: 2800 }) as unknown as number;
+      } else {
+        startTimer = window.setTimeout(start, 1800);
+      }
+    };
+    if (document.readyState === "complete") armCanvas();
+    else window.addEventListener("load", armCanvas, { once: true });
 
     window.addEventListener("resize", resize);
     if (!coarsePointer) {
@@ -355,6 +371,7 @@ export function GradientBackground({ interactive = true }: GradientBackgroundPro
 
     return () => {
       cancelAnimationFrame(frameId);
+      window.removeEventListener("load", armCanvas);
       if (window.cancelIdleCallback) window.cancelIdleCallback(startTimer);
       else clearTimeout(startTimer);
       window.removeEventListener("resize", resize);

@@ -588,12 +588,17 @@ body {
 
 .glass-card {
   position: relative;
-  border: 1px solid rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.14);
   border-radius: var(--radius-card);
-  /* More translucent so constellation stars read through */
-  background: linear-gradient(145deg, rgba(15, 23, 42, 0.38), rgba(8, 11, 18, 0.22));
-  backdrop-filter: blur(8px);
-  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+  /* Glassier — stars sparkle through */
+  background: linear-gradient(
+    145deg,
+    rgba(15, 23, 42, 0.28),
+    rgba(8, 11, 18, 0.12)
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
   overflow: hidden;
 }
 
@@ -618,6 +623,11 @@ body {
 
 .glass-card:hover {
   border-color: rgba(52, 211, 153, 0.35);
+  background: linear-gradient(
+    145deg,
+    rgba(15, 23, 42, 0.36),
+    rgba(8, 11, 18, 0.18)
+  );
   transform: translateY(-3px);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.35),
@@ -660,7 +670,9 @@ body {
   display: inline-block;
   border-radius: var(--radius-chip);
   border: 1px solid var(--panel-border);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(15, 23, 42, 0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   padding: 0.4rem 0.85rem;
   font-family: var(--font-mono), monospace;
   font-size: 0.7rem;
@@ -854,8 +866,9 @@ body {
 .stat-card {
   border: 1px solid var(--panel-border);
   border-radius: 0.85rem;
-  background: rgba(15, 23, 42, 0.28);
-  backdrop-filter: blur(6px);
+  background: rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   padding: 1rem 1.15rem;
 }
 
