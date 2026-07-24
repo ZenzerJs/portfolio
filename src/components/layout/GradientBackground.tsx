@@ -23,10 +23,10 @@ type Star = {
   twinkleSpeed: number;
 };
 
-// Sqrt scaling keeps desktop star counts from exploding vs mobile.
+// Sqrt scaling keeps mobile star counts low; denser on laptop/desktop monitors.
 function targetCount(width: number, height: number) {
-  const base = Math.round(Math.sqrt(width * height) / 28);
-  return Math.min(Math.max(base, 32), 85);
+  const base = Math.round(Math.sqrt(width * height) / 24);
+  return Math.min(Math.max(base, 32), 100);
 }
 
 function createStars(count: number, width: number, height: number): Star[] {
