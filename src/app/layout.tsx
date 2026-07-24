@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Space_Grotesk, Syne } from "next/font/google";
 import { siteConfig } from "@/lib/site";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -70,6 +71,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <ScrollProgress />
         {children}
       </body>
     </html>

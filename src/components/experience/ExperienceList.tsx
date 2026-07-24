@@ -1,4 +1,7 @@
+"use client";
+
 import { ExperienceCard } from "@/components/experience/ExperienceCard";
+import { StaggerList, StaggerItem } from "@/components/ui/MotionPrimitives";
 
 type Experience = {
   period: string;
@@ -15,10 +18,12 @@ type ExperienceListProps = {
 
 export function ExperienceList({ experiences }: ExperienceListProps) {
   return (
-    <div>
+    <StaggerList>
       {experiences.map((experience) => (
-        <ExperienceCard key={`${experience.period}-${experience.company}`} {...experience} />
+        <StaggerItem key={`${experience.period}-${experience.company}`}>
+          <ExperienceCard {...experience} />
+        </StaggerItem>
       ))}
-    </div>
+    </StaggerList>
   );
 }

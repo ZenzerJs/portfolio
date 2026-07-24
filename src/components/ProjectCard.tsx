@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { ExternalLink, Github } from "lucide-react";
+import { motion } from "motion/react";
 import type { Project } from "@/content/projects";
 
 interface ProjectCardProps {
@@ -14,7 +17,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }[project.status];
 
   return (
-    <article className="glass-card group relative p-6">
+    <motion.article
+      className="glass-card group relative p-6"
+      whileHover={{ y: -6, scale: 1.015 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
       <Link
         href={`/projects/${project.slug}`}
         className="absolute inset-0 z-0 rounded-[inherit]"
@@ -63,6 +70,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

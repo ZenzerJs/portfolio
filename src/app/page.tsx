@@ -9,6 +9,7 @@ import { SidebarNav } from "@/components/layout/SidebarNav";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SkillChips } from "@/components/SkillChips";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { RevealSection } from "@/components/ui/MotionPrimitives";
 import { educationEntries, experiences, links, profile } from "@/data/portfolio";
 import { siteConfig } from "@/lib/site";
 
@@ -36,15 +37,15 @@ export default function HomePage() {
 
         <Hero />
 
-        <section id="about" className="page-container pb-16 pt-10 sm:pt-14">
+        <RevealSection id="about" className="page-container pb-16 pt-10 sm:pt-14">
           <SectionHeader
             title="About"
             subtitle="CS @ Laurier · IT Operations @ Trillium Health Partners · builder at heart."
           />
           <AboutSection />
-        </section>
+        </RevealSection>
 
-        <section id="experience" className="page-container pb-16 pt-6">
+        <RevealSection id="experience" className="page-container pb-16 pt-6">
           <SectionHeader
             title="Experience"
             subtitle="Roles across healthcare IT and software development."
@@ -52,31 +53,34 @@ export default function HomePage() {
             countLabel="positions"
           />
           <ExperienceList experiences={experiences} />
-        </section>
+        </RevealSection>
 
-        <section id="works" className="page-container pb-16 pt-6">
+        <RevealSection id="works" className="page-container pb-16 pt-6">
           <SectionHeader
             title="Projects"
             subtitle="ML tools, AI agents, full-stack apps, and coursework experiments."
           />
           <FeaturedProjects />
-        </section>
+        </RevealSection>
 
-        <section id="skills" className="page-container pb-16 pt-6">
+        <RevealSection id="skills" className="page-container pb-16 pt-6">
           <SectionHeader title="Skills" subtitle="Technologies I use and keep sharpening." />
           <SkillChips />
-        </section>
+        </RevealSection>
 
-        <section id="education" className="page-container pb-16 pt-6">
+        <RevealSection id="education" className="page-container pb-16 pt-6">
           <SectionHeader title="Education" subtitle="Academic background and relevant coursework." />
           <div className="space-y-6">
             {educationEntries.map((entry) => (
               <EducationSection key={entry.school} {...entry} />
             ))}
           </div>
-        </section>
+        </RevealSection>
 
-        <ContactSection />
+        <RevealSection id="contact" className="">
+          <ContactSection />
+        </RevealSection>
+
         <Footer />
       </main>
     </div>

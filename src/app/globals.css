@@ -869,4 +869,55 @@ body {
   .fade-up {
     animation: none;
   }
+
+  /* Disable Framer Motion animations for reduced-motion users */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Custom Scrollbar ── */
+
+/* Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--accent) 0%,
+    var(--violet) 50%,
+    var(--warm) 100%
+  );
+  border-radius: 9999px;
+  border: 2px solid var(--background);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--accent) 0%,
+    var(--violet) 50%,
+    var(--warm) 100%
+  );
+  border: 1px solid var(--background);
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
 }

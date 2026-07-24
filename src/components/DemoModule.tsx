@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { ChevronDown, ChevronUp, Play } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import type { EmbedConfig } from "@/content/projects";
 
 interface DemoModuleProps {
@@ -63,26 +64,39 @@ export function DemoModule({ embed }: DemoModuleProps) {
             {isOpen ? "Hide Interactive Demo" : "Open Interactive Demo"}
           </span>
         </div>
-        {isOpen ? (
-          <ChevronUp size={18} className="text-muted-foreground" aria-hidden="true" />
-        ) : (
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
           <ChevronDown size={18} className="text-muted-foreground" aria-hidden="true" />
-        )}
+        </motion.span>
       </button>
 
-      {isOpen && (
-        <div id="demo-panel" className="px-5 pb-5">
-          <Suspense
-            fallback={
-              <div className="w-full h-64 rounded-xl bg-muted animate-pulse flex items-center justify-center text-muted-foreground text-sm">
-                Loading demo...
-              </div>
-            }
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            id="demo-panel"
+            key="demo-content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            style={{ overflow: "hidden" }}
           >
-            <DemoEmbed embed={embed} />
-          </Suspense>
-        </div>
-      )}
+            <div className="px-5 pb-5">
+              <Suspense
+                fallback={
+                  <div className="w-full h-64 rounded-xl bg-muted animate-pulse flex items-center justify-center text-muted-foreground text-sm">
+                    Loading demo...
+                  </div>
+                }
+              >
+                <DemoEmbed embed={embed} />
+              </Suspense>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
