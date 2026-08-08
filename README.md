@@ -1,4 +1,4 @@
-# Jayden Saha — Portfolio
+# Jayden's — Portfolio
 
 A recruiter-optimized portfolio built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 
