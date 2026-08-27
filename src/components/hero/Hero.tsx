@@ -55,7 +55,7 @@ export function Hero() {
           {profile.role}
         </motion.p>
 
-        {/* Continuous blur across both lines — same start window, slight stagger */}
+        {/* Continuous blur reveal across headline */}
         <h1 className="hero-title">
           <BlurRevealText text={firstName} className="hero-title-line" delay={0.18} />
           <BlurRevealText
@@ -66,7 +66,7 @@ export function Hero() {
         </h1>
 
         <motion.p
-          className="hero-tagline mt-6 max-w-2xl"
+          className="hero-tagline mt-6 max-w-2xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.55, ease }}
@@ -75,7 +75,7 @@ export function Hero() {
         </motion.p>
 
         <motion.p
-          className="hero-intro mt-4 max-w-xl"
+          className="hero-intro mt-4 max-w-2xl leading-relaxed text-muted"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.62, ease }}
@@ -105,7 +105,13 @@ export function Hero() {
               }}
             >
               <span
-                className={`chip ${i % 3 === 0 ? "chip--teal" : i % 3 === 1 ? "chip--violet" : "chip--warm"}`}
+                className={`chip ${
+                  i % 3 === 0
+                    ? "chip--teal"
+                    : i % 3 === 1
+                    ? "chip--violet"
+                    : "chip--warm"
+                }`}
               >
                 {item}
               </span>
@@ -121,7 +127,7 @@ export function Hero() {
         >
           <Magnetic className="flex">
             <Link href="#works" className="btn-primary w-full sm:w-auto">
-              View projects
+              Explore Systems & Projects
               <ArrowRight size={18} strokeWidth={2.5} />
             </Link>
           </Magnetic>
@@ -132,7 +138,7 @@ export function Hero() {
               className="btn-ghost w-full sm:w-auto"
             >
               <Download size={18} strokeWidth={2.5} />
-              Download resume
+              Download Résumé
             </a>
           </Magnetic>
         </motion.div>

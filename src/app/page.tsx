@@ -6,6 +6,7 @@ import { ContactSection } from "@/components/layout/ContactSection";
 import { Footer } from "@/components/layout/Footer";
 import { GradientBackground } from "@/components/layout/GradientBackground";
 import { SidebarNav } from "@/components/layout/SidebarNav";
+import { ArchitectureMatrix } from "@/components/architecture/ArchitectureMatrix";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SkillChips } from "@/components/SkillChips";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -53,6 +54,14 @@ export default function HomePage() {
             countLabel="positions"
           />
           <ExperienceList experiences={experiences} />
+        </RevealSection>
+
+        <RevealSection id="systems" className="page-container pb-16 pt-6">
+          <SectionHeader
+            title="Architecture"
+            subtitle="6-system engineering blueprint: technical moats, verification gates, and signals."
+          />
+          <ArchitectureMatrix />
         </RevealSection>
 
         <RevealSection id="works" className="page-container pb-16 pt-6">

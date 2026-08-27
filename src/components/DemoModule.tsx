@@ -1,15 +1,21 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { ChevronDown, ChevronUp, Play } from "lucide-react";
+import { ChevronDown, Play } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import type { EmbedConfig } from "@/content/projects";
+
+import { BroadcastTVConsole } from "@/components/showcase/BroadcastTVConsole";
 
 interface DemoModuleProps {
   embed: EmbedConfig;
 }
 
 function DemoEmbed({ embed }: { embed: EmbedConfig }) {
+  if (embed.src.includes("shanesia-portfolio")) {
+    return <BroadcastTVConsole initialUrl={embed.src} title={embed.title} />;
+  }
+
   if (embed.type === "iframe") {
     return (
       <iframe

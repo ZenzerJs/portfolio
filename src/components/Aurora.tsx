@@ -146,19 +146,6 @@ export default function Aurora({
       gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       (gl.canvas as HTMLCanvasElement).style.backgroundColor = "transparent";
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let program: any;
-
-      function resize() {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        renderer.setSize(width, height);
-        if (program) {
-          program.uniforms.uResolution.value = [width, height];
-        }
-      }
-      window.addEventListener("resize", resize);
-
       const geometry = new Triangle(gl);
       if (geometry.attributes.uv) {
         delete geometry.attributes.uv;
@@ -171,7 +158,8 @@ export default function Aurora({
         }
       );
 
-      program = new Program(gl, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const program: any = new Program(gl, {
         vertex: VERT,
         fragment: FRAG,
         uniforms: {
@@ -182,6 +170,16 @@ export default function Aurora({
           uBlend: { value: blend },
         },
       });
+
+      function resize() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        renderer.setSize(width, height);
+        if (program) {
+          program.uniforms.uResolution.value = [width, height];
+        }
+      }
+      window.addEventListener("resize", resize);
 
       const mesh = new Mesh(gl, { geometry, program });
       ctn.appendChild(gl.canvas);
