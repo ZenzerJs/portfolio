@@ -1,7 +1,7 @@
 # Codebase: ZenzerJs/portfolio
 
 **Repository**: [https://github.com/ZenzerJs/portfolio](https://github.com/ZenzerJs/portfolio)
-**Generated**: 2026-09-08T03:56:53.891Z
+**Generated**: 2026-09-08T04:12:30.391Z
 **Total Files**: 60
 
 ## Directory Structure
@@ -111579,7 +111579,7 @@ export default config;
 
 ### `public/resume.pdf`
 
-*Binary file (102518 bytes)*
+*Binary file (152251 bytes)*
 
 ---
 
@@ -117005,7 +117005,7 @@ export const profile = {
     "Engineering autonomous multi-agent pipelines, privacy-first enterprise automations, and high-craft web applications.",
   intro:
     "Computer Science & Management student at Wilfrid Laurier University with enterprise IT experience at Trillium Health Partners. Focused on stateful LangGraph orchestrations, on-prem local LLMs, and high-performance Next.js architectures.",
-  email: "jayden-saha-dev@gmail.com",
+  email: "jayden.saha.dev@gmail.com",
   available: true,
 };
 

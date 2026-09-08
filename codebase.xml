@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<codebase repo="ZenzerJs/portfolio" generated_at="2026-09-08T03:56:53.864Z">
+<codebase repo="ZenzerJs/portfolio" generated_at="2026-09-08T04:12:30.366Z">
   <directory_structure>
 <![CDATA[
 ├── Other Projects (XML)
@@ -111447,7 +111447,7 @@ export default config;
 ]]></content>
     </file>
     <file path="public/resume.pdf">
-      <binary size_bytes="102518" type=".pdf" />
+      <binary size_bytes="152251" type=".pdf" />
     </file>
     <file path="src/app/favicon.ico">
       <binary size_bytes="25931" type=".ico" />
@@ -116656,7 +116656,7 @@ export const profile = {
     "Engineering autonomous multi-agent pipelines, privacy-first enterprise automations, and high-craft web applications.",
   intro:
     "Computer Science & Management student at Wilfrid Laurier University with enterprise IT experience at Trillium Health Partners. Focused on stateful LangGraph orchestrations, on-prem local LLMs, and high-performance Next.js architectures.",
-  email: "jayden-saha-dev@gmail.com",
+  email: "jayden.saha.dev@gmail.com",
   available: true,
 };
 
