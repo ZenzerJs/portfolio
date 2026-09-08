@@ -18,7 +18,7 @@ export const profile = {
     "Engineering autonomous multi-agent pipelines, privacy-first enterprise automations, and high-craft web applications.",
   intro:
     "Computer Science & Management student at Wilfrid Laurier University with enterprise IT experience at Trillium Health Partners. Focused on stateful LangGraph orchestrations, on-prem local LLMs, and high-performance Next.js architectures.",
-  email: "Jaydensaha@yahoo.com",
+  email: "jayden-saha-dev@gmail.com",
   available: true,
 };
 
