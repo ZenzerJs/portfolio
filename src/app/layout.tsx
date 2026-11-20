@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Manrope, Syne } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/lib/site";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { SmoothScrollProvider } from "@/components/boreal/SmoothScrollProvider";
@@ -88,6 +89,7 @@ export default function RootLayout({
             <CommandPalette />
           </BorealAtmosphereProvider>
         </SmoothScrollProvider>
+        <Analytics />
       </body>
     </html>
   );
