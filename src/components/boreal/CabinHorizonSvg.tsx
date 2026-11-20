@@ -3,7 +3,6 @@
 import { memo, useId, type CSSProperties } from "react";
 
 export interface CabinHorizonSvgProps {
-  surface?: "frost" | "hearth";
   aurora?: "quiet" | "balanced" | "vivid";
   auroraStrength?: number;
   stoked?: boolean;
@@ -46,67 +45,35 @@ interface Palette {
   smoke: string;
 }
 
-const PALETTES: Record<"frost" | "hearth", Palette> = {
-  frost: {
-    farBack: "#1a2944",
-    farBackShade: "#0f1a2e",
-    farFront: "#12203a",
-    farFrontShade: "#0b1526",
-    farSnow: "#a7b9d3",
-    haze: "#1c2c47",
-    ridgeTop: "#7d90ad",
-    ridgeBottom: "#172235",
-    ridgeRim: "#d5e1ef",
-    treeBack: "#132038",
-    treeBackShade: "#0d172a",
-    treeFront: "#0a1322",
-    treeFrontShade: "#060d18",
-    treeSnow: "#b3c3d8",
-    snowTop: "#c3d1e2",
-    snowMid: "#5b6d89",
-    snowLow: "#1a2538",
-    snowRim: "#e6eef7",
-    snowShadow: "#33445f",
-    roofSnowTop: "#f1f6fb",
-    roofSnowBottom: "#a3b4ca",
-    icicle: "#dbeafe",
-    fgLit: "#0a111d",
-    fgShade: "#03060b",
-    fgSnow: "#8597b1",
-    fgBank: "#18233a",
-    ground: "#080b12",
-    smoke: "#cdd7e4",
-  },
-  hearth: {
-    farBack: "#2a2531",
-    farBackShade: "#1a161e",
-    farFront: "#1f1b24",
-    farFrontShade: "#141117",
-    farSnow: "#c2b6a8",
-    haze: "#2a2420",
-    ridgeTop: "#9a8b78",
-    ridgeBottom: "#1f1a16",
-    ridgeRim: "#efe2cf",
-    treeBack: "#1f1b1d",
-    treeBackShade: "#151214",
-    treeFront: "#141110",
-    treeFrontShade: "#0c0a09",
-    treeSnow: "#cdbfad",
-    snowTop: "#d8cab7",
-    snowMid: "#776a5b",
-    snowLow: "#231d18",
-    snowRim: "#f5ebdc",
-    snowShadow: "#4a3f35",
-    roofSnowTop: "#f8f0e4",
-    roofSnowBottom: "#bcae9b",
-    icicle: "#f3ead8",
-    fgLit: "#110e0c",
-    fgShade: "#070505",
-    fgSnow: "#9c8e7e",
-    fgBank: "#221c17",
-    ground: "#0c0b0a",
-    smoke: "#ddd2c4",
-  },
+const FROST_PALETTE: Palette = {
+  farBack: "#1a2944",
+  farBackShade: "#0f1a2e",
+  farFront: "#12203a",
+  farFrontShade: "#0b1526",
+  farSnow: "#a7b9d3",
+  haze: "#1c2c47",
+  ridgeTop: "#7d90ad",
+  ridgeBottom: "#172235",
+  ridgeRim: "#d5e1ef",
+  treeBack: "#132038",
+  treeBackShade: "#0d172a",
+  treeFront: "#0a1322",
+  treeFrontShade: "#060d18",
+  treeSnow: "#b3c3d8",
+  snowTop: "#c3d1e2",
+  snowMid: "#5b6d89",
+  snowLow: "#1a2538",
+  snowRim: "#e6eef7",
+  snowShadow: "#33445f",
+  roofSnowTop: "#f1f6fb",
+  roofSnowBottom: "#a3b4ca",
+  icicle: "#dbeafe",
+  fgLit: "#0a111d",
+  fgShade: "#03060b",
+  fgSnow: "#8597b1",
+  fgBank: "#18233a",
+  ground: "#080b12",
+  smoke: "#cdd7e4",
 };
 
 const WOOD = "#3d2b1f";
@@ -118,12 +85,6 @@ const STONE = "#4b505c";
 const STONE_DARK = "#2a2e37";
 const LOG_END = "#7c5536";
 const LOG_RING = "#a37a52";
-
-const AURORA_K: Record<"quiet" | "balanced" | "vivid", number> = {
-  quiet: 0.3,
-  balanced: 0.6,
-  vivid: 1,
-};
 
 /* ------------------------------------------------------------------ */
 /* Deterministic geometry helpers (integer RNG => SSR/CSR identical)   */
@@ -988,28 +949,23 @@ const ForegroundRight = memo(function ForegroundRight({ p, uid }: { p: Palette; 
 /* ------------------------------------------------------------------ */
 
 export function CabinHorizonSvg({
-  surface = "frost",
   aurora = "balanced",
-  auroraStrength,
+  auroraStrength = 60,
   stoked = false,
   onStokeCabin,
   className = "",
 }: CabinHorizonSvgProps) {
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const p = PALETTES[surface];
-  const k =
-    typeof auroraStrength === "number"
-      ? 0.42 + (auroraStrength / 100) * 1.08
-      : AURORA_K[aurora];
-  const spill = stoked ? 1 : surface === "hearth" ? 0.82 : 0.58;
-  const glassBoost = stoked ? 0.9 : surface === "hearth" ? 0.4 : 0.12;
+  const p = FROST_PALETTE;
+  const k = 0.42 + (auroraStrength / 100) * 1.08;
+  const spill = stoked ? 1 : 0.58;
+  const glassBoost = stoked ? 0.9 : 0.12;
   const smokeOpacity = stoked ? 1 : 0.75;
 
   return (
     <div
       className={`relative h-full w-full overflow-hidden ${className}`}
       data-boreal-horizon=""
-      data-surface={surface}
       data-aurora={aurora}
       data-stoked={stoked ? "true" : "false"}
     >
@@ -1079,5 +1035,3 @@ export function CabinHorizonSvg({
     </div>
   );
 }
-
-export default CabinHorizonSvg;

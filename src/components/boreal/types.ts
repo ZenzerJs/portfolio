@@ -1,6 +1,5 @@
 export type AuroraIntensity = "quiet" | "balanced" | "vivid";
 export type SnowMode = "still" | "flurry";
-export type CabinSurface = "frost" | "hearth";
 
 export type RgbColor = [number, number, number];
 

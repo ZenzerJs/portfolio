@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { scrollBus } from "@/components/boreal/SmoothScrollProvider";
 
 export function ScrollProgress() {
   const barRef = useRef<HTMLDivElement>(null);
@@ -16,12 +17,7 @@ export function ScrollProgress() {
 
     const update = () => {
       rafId = null;
-      const docMax = Math.max(
-        1,
-        document.documentElement.scrollHeight - window.innerHeight,
-      );
-      const progress = Math.max(0, Math.min(1, window.scrollY / docMax));
-      bar.style.transform = `scaleX(${progress})`;
+      bar.style.transform = `scaleX(${scrollBus.progress})`;
     };
 
     const schedule = () => {
@@ -29,7 +25,7 @@ export function ScrollProgress() {
       rafId = requestAnimationFrame(update);
     };
 
-    update();
+    schedule();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule, { passive: true });
 

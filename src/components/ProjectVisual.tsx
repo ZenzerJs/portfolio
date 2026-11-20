@@ -7,7 +7,7 @@ interface ProjectVisualProps {
   priority?: boolean;
   framed?: boolean;
   sizes?: string;
-  mode?: "auto" | "image" | "diagram";
+  mode?: "auto" | "diagram";
 }
 
 type PipelineStage = {
@@ -134,7 +134,7 @@ function PipelineBlueprint({
     <div
       role="region"
       aria-label={ariaLabel}
-      className="flex h-full min-h-[248px] w-full flex-col justify-between bg-[#080f1d]/55 backdrop-blur-md"
+      className="flex h-full min-h-[248px] w-full flex-col justify-between bg-[#080f1d]/55"
     >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-3">
         <span className="font-mono text-[13px] text-muted">{label}</span>
@@ -217,10 +217,6 @@ export function ProjectVisual({
   mode = "auto",
 }: ProjectVisualProps) {
   if (!project.image && !project.diagram) {
-    return null;
-  }
-
-  if (mode === "image" && !project.image) {
     return null;
   }
 

@@ -34,8 +34,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["localhost", "127.0.0.1"],
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   experimental: {
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: ["lucide-react", "simple-icons"],
   },
   async redirects() {
     return [

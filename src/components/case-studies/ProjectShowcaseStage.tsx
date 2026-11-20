@@ -1,5 +1,3 @@
-"use client";
-
 import { ViewTransition } from "react";
 import { ExternalLink } from "lucide-react";
 import { ProjectVisual } from "@/components/ProjectVisual";

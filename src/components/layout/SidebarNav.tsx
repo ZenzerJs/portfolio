@@ -26,7 +26,6 @@ import {
   Search,
   Snowflake,
   Sparkles,
-  User,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -53,30 +52,37 @@ const NAV_ICONS: Record<string, LucideIcon> = {
   work: Layers,
   experience: Briefcase,
   skills: Cpu,
-  about: User,
   education: GraduationCap,
   contact: Mail,
 };
 
-function resolveActiveSection(sections: HTMLElement[]): string {
-  if (sections.length === 0) return "top";
+type SectionMetric = {
+  id: string;
+  top: number;
+};
 
-  const nearBottom =
-    window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight - 24;
+function resolveActiveSection(
+  sectionMetrics: SectionMetric[],
+  scrollY: number,
+  viewportHeight: number,
+  docHeight: number,
+): string {
+  if (sectionMetrics.length === 0) return "top";
+
+  const nearBottom = scrollY + viewportHeight >= docHeight - 24;
   if (nearBottom) {
-    return sections[sections.length - 1].id;
+    return sectionMetrics[sectionMetrics.length - 1].id;
   }
 
-  if (window.scrollY < 80) {
-    return sections[0].id;
+  if (scrollY < 80) {
+    return sectionMetrics[0].id;
   }
 
-  const activationLine = 140;
-  let currentId = sections[0].id;
+  const activationLine = scrollY + 140;
+  let currentId = sectionMetrics[0].id;
 
-  for (const section of sections) {
-    if (section.getBoundingClientRect().top <= activationLine) {
+  for (const section of sectionMetrics) {
+    if (section.top <= activationLine) {
       currentId = section.id;
     }
   }
@@ -168,11 +174,19 @@ export function SidebarNav() {
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
 
+    let sectionMetrics: SectionMetric[] = [];
+    let cachedDocHeight = 0;
+    let cachedViewportHeight = 0;
     let rafId: number | null = null;
 
     const update = () => {
       rafId = null;
-      const next = resolveActiveSection(sections);
+      const next = resolveActiveSection(
+        sectionMetrics,
+        window.scrollY,
+        cachedViewportHeight,
+        cachedDocHeight,
+      );
       setActiveId((prev) => (prev === next ? prev : next));
     };
 
@@ -181,13 +195,31 @@ export function SidebarNav() {
       rafId = requestAnimationFrame(update);
     };
 
-    update();
+    const measure = () => {
+      const scrollY = window.scrollY;
+      sectionMetrics = sections.map((el) => ({
+        id: el.id,
+        top: el.getBoundingClientRect().top + scrollY,
+      }));
+      cachedDocHeight = document.documentElement.scrollHeight;
+      cachedViewportHeight = window.innerHeight;
+      scheduleUpdate();
+    };
+
+    measure();
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", measure, { passive: true });
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(measure)
+        : null;
+    resizeObserver?.observe(document.documentElement);
 
     return () => {
       window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
+      window.removeEventListener("resize", measure);
+      resizeObserver?.disconnect();
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }

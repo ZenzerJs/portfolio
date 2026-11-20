@@ -21,7 +21,6 @@ export function Hero() {
     <BorealHeroStage
       id="top"
       ariaLabelledBy="hero-heading"
-      surface="frost"
       aurora={aurora}
       auroraStrength={auroraStrength}
       snow={snow}

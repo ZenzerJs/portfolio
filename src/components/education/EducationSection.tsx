@@ -4,7 +4,6 @@ import { EditorialReveal } from "@/components/boreal/EditorialMotion";
 
 type EducationSectionProps = {
   school: string;
-  shortName: string;
   country: string;
   degree: string;
   yearRange: string;
@@ -75,7 +74,7 @@ export function EducationSection({
                       {course.label}
                     </span>
                     {course.status === "in-progress" ? (
-                      <span className="rounded-full border border-white/12 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[12px] text-muted backdrop-blur-sm">
+                      <span className="rounded-full border border-white/12 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[12px] text-muted">
                         In progress
                       </span>
                     ) : null}
@@ -89,7 +88,7 @@ export function EducationSection({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${course.code} course page`}
-                          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-muted backdrop-blur-sm transition-colors hover:border-border-hover hover:bg-white/[0.08] hover:text-accent"
+                          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-muted transition-colors hover:border-border-hover hover:bg-white/[0.08] hover:text-accent"
                         >
                           <span>Course page</span>
                           <ExternalLink size={14} aria-hidden="true" />
@@ -101,7 +100,7 @@ export function EducationSection({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${course.code} Wilfrid Laurier calendar`}
-                          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-muted backdrop-blur-sm transition-colors hover:border-border-hover hover:bg-white/[0.08] hover:text-accent"
+                          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-muted transition-colors hover:border-border-hover hover:bg-white/[0.08] hover:text-accent"
                         >
                           <span>WLU calendar</span>
                           <ExternalLink size={14} aria-hidden="true" />

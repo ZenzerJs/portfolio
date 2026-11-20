@@ -33,7 +33,7 @@ export function HeroWorkBridge() {
       />
 
       <div className="page-container relative z-10">
-        <div className="relative overflow-hidden rounded-xl border border-border bg-[#0b1222]/84 px-4 py-3.5 backdrop-blur-md sm:px-5 sm:py-4">
+        <div className="editorial-surface relative overflow-hidden px-4 py-3.5 sm:px-5 sm:py-4">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-accent/60 to-violet/55"
@@ -55,7 +55,7 @@ export function HeroWorkBridge() {
             {CORE_STACK.map((tech) => (
               <li
                 key={tech}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface/65 px-2.5 py-1 text-[13px] font-medium text-soft"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[13px] font-medium text-soft"
               >
                 <TechIcon name={tech} size={14} />
                 <span>{tech}</span>

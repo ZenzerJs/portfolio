@@ -16,7 +16,6 @@
   --violet-soft: rgba(167, 139, 250, 0.12);
   --sidebar-width: 16rem;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
@@ -429,7 +428,7 @@
       0 0 18px rgba(45, 212, 191, 0.75);
   }
 
-  /* Lightweight CSS entrance animations replacing motion/react */
+  /* Lightweight CSS modal entrance animation */
   @keyframes modal-enter {
     from {
       opacity: 0;
@@ -441,23 +440,8 @@
     }
   }
 
-  @keyframes toast-enter {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   .animate-modal-enter {
     animation: modal-enter 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .animate-toast-enter {
-    animation: toast-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   /* Pure CSS 220ms vertical slot-roll hover primitive */
@@ -554,8 +538,7 @@
       transition: none;
     }
 
-    .animate-modal-enter,
-    .animate-toast-enter {
+    .animate-modal-enter {
       animation: none;
     }
 

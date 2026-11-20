@@ -108,7 +108,6 @@ export const experiences: Experience[] = [
 export const educationEntries = [
   {
     school: "Wilfrid Laurier University",
-    shortName: "Laurier",
     country: "Waterloo, ON, Canada",
     degree: "Honours BSc — Computer Science",
     yearRange: "2025 – Expected ~2030",

@@ -19,7 +19,7 @@ const syne = Syne({
 
 const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-manrope",
   display: "swap",
   preload: true,

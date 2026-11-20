@@ -7,22 +7,18 @@ import { Flame } from "lucide-react";
 import { CabinHorizonSvg } from "@/components/boreal/CabinHorizonSvg";
 import { scrollBus } from "@/components/boreal/SmoothScrollProvider";
 import {
-  AURORA_PRESET_STRENGTH,
   type AuroraIntensity,
-  type CabinSurface,
   type SnowMode,
 } from "@/components/boreal/types";
 
 export interface BorealHeroStageProps {
   id?: string;
   ariaLabelledBy?: string;
-  surface?: CabinSurface;
   aurora: AuroraIntensity;
-  auroraStrength?: number;
+  auroraStrength: number;
   snow: SnowMode;
   stoked: boolean;
   onStokeCabin: () => void;
-  topSlot?: ReactNode;
   children: ReactNode;
   className?: string;
   contentClassName?: string;
@@ -54,13 +50,11 @@ function createForegroundFlakes(): ForegroundFlake[] {
 export function BorealHeroStage({
   id,
   ariaLabelledBy,
-  surface = "frost",
   aurora,
   auroraStrength,
   snow,
   stoked,
   onStokeCabin,
-  topSlot,
   children,
   className = "",
   contentClassName = "",
@@ -79,11 +73,6 @@ export function BorealHeroStage({
   const toastClearTimerRef = useRef<number | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastVisible, setToastVisible] = useState(false);
-
-  const resolvedAuroraStrength =
-    typeof auroraStrength === "number"
-      ? auroraStrength
-      : AURORA_PRESET_STRENGTH[aurora];
 
   useEffect(() => {
     snowRef.current = snow;
@@ -584,8 +573,6 @@ export function BorealHeroStage({
         }}
       />
 
-      {topSlot ? <div className="relative z-10 w-full">{topSlot}</div> : null}
-
       {/* Hero typography container */}
       <div
         ref={copyRef}
@@ -606,9 +593,8 @@ export function BorealHeroStage({
         }}
       >
         <CabinHorizonSvg
-          surface={surface}
           aurora={aurora}
-          auroraStrength={resolvedAuroraStrength}
+          auroraStrength={auroraStrength}
           stoked={stoked}
           onStokeCabin={handleStokeCabin}
           className="h-full w-full"

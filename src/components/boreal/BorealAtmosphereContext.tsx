@@ -20,7 +20,7 @@ import {
   type SnowMode,
 } from "@/components/boreal/types";
 
-export { DEFAULT_AURORA_TINT, type RgbColor };
+export { DEFAULT_AURORA_TINT };
 
 const AURORA_CYCLE: AuroraIntensity[] = ["quiet", "balanced", "vivid"];
 
@@ -29,7 +29,6 @@ interface BorealAtmosphereContextValue {
   setAuroraStrength: (value: number) => void;
   auroraStrengthRef: MutableRefObject<number>;
   aurora: AuroraIntensity;
-  setAurora: (value: AuroraIntensity) => void;
   cycleAurora: () => void;
   snow: SnowMode;
   toggleSnow: () => void;
@@ -70,13 +69,6 @@ export function BorealAtmosphereProvider({
     auroraStrengthRef.current = clamped;
     setAuroraStrengthState(clamped);
   }, []);
-
-  const setAurora = useCallback(
-    (preset: AuroraIntensity) => {
-      setAuroraStrength(AURORA_PRESET_STRENGTH[preset]);
-    },
-    [setAuroraStrength],
-  );
 
   const cycleAurora = useCallback(() => {
     setAuroraStrengthState((prev) => {
@@ -124,7 +116,6 @@ export function BorealAtmosphereProvider({
       setAuroraStrength,
       auroraStrengthRef,
       aurora,
-      setAurora,
       cycleAurora,
       snow,
       toggleSnow,
@@ -138,7 +129,6 @@ export function BorealAtmosphereProvider({
       auroraStrength,
       setAuroraStrength,
       aurora,
-      setAurora,
       cycleAurora,
       snow,
       toggleSnow,

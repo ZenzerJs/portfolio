@@ -1,9 +1,7 @@
 "use client";
 
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useRef,
   type ReactNode,
@@ -138,22 +136,6 @@ export function resumeSmoothScroll() {
   }
 }
 
-interface SmoothScrollContextValue {
-  scrollToTarget: typeof scrollToTarget;
-  pauseSmoothScroll: typeof pauseSmoothScroll;
-  resumeSmoothScroll: typeof resumeSmoothScroll;
-}
-
-const SmoothScrollContext = createContext<SmoothScrollContextValue>({
-  scrollToTarget,
-  pauseSmoothScroll,
-  resumeSmoothScroll,
-});
-
-export function useSmoothScroll() {
-  return useContext(SmoothScrollContext);
-}
-
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
@@ -286,11 +268,5 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     };
   }, [pathname]);
 
-  return (
-    <SmoothScrollContext.Provider
-      value={{ scrollToTarget, pauseSmoothScroll, resumeSmoothScroll }}
-    >
-      {children}
-    </SmoothScrollContext.Provider>
-  );
+  return <>{children}</>;
 }
