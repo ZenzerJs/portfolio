@@ -273,4 +273,24 @@ describe("Verified Projects & Portfolio Data Integrity", () => {
       ).toBeDefined();
     }
   });
+
+  it("keeps sidebar availability pill synced with Summer 2027 and avoids double Live card labels", () => {
+    expect(profile.shortAvailability).toContain("2027");
+    expect(profile.shortAvailability).not.toContain("2026");
+
+    const liveCount = projects.filter((project) => Boolean(project.liveUrl)).length;
+    const liveProofPoint = profile.proofPoints.find((point) =>
+      point.value.toLowerCase().includes("live"),
+    );
+    expect(liveProofPoint?.value).toBe(`${liveCount} Live`);
+
+    for (const project of projects) {
+      if (project.liveUrl) {
+        expect(
+          project.metric,
+          `Project ${project.slug} metric repeats "Live" beside the card Live link`,
+        ).not.toMatch(/\blive\b/i);
+      }
+    }
+  });
 });

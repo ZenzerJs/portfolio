@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { profile } from "@/data/portfolio";
 
-export const alt = "Jayden Saha — Full-Stack & AI Systems Engineer";
+export const alt = "Jayden Saha — CS Student · Full-Stack & AI Systems";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

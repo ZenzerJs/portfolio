@@ -319,7 +319,7 @@ export function SidebarNav() {
         className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.75)]"
         aria-hidden="true"
       />
-      <span>Open · 2026 Co-op</span>
+      <span>{profile.shortAvailability}</span>
     </div>
   );
 
@@ -439,22 +439,22 @@ export function SidebarNav() {
             type="button"
             onClick={toggleSnow}
             aria-pressed={snow === "flurry"}
-            className={`inline-flex min-h-10 cursor-pointer items-center justify-between gap-1 rounded-lg border px-2.5 text-[12px] font-medium transition-colors ${
+            className={`flex min-h-11 min-w-0 cursor-pointer flex-col items-start justify-center gap-0.5 overflow-hidden rounded-lg border px-2.5 py-1.5 text-left transition-colors ${
               snow === "flurry"
                 ? "border-accent/30 bg-accent/10 text-foreground"
                 : "border-white/10 bg-white/[0.03] text-muted hover:border-white/20 hover:text-foreground"
             }`}
           >
-            <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center gap-1.5 text-[12px] font-medium leading-tight">
               <Snowflake
                 size={13}
-                className={snow === "flurry" ? "text-accent" : "text-muted"}
+                className={`shrink-0 ${snow === "flurry" ? "text-accent" : "text-muted"}`}
                 aria-hidden="true"
               />
               <span>Snow</span>
             </span>
             <span
-              className={`font-mono text-[11px] ${
+              className={`font-mono text-[11px] leading-tight ${
                 snow === "flurry" ? "text-accent" : "text-muted"
               }`}
             >
@@ -466,22 +466,22 @@ export function SidebarNav() {
             type="button"
             onClick={toggleStoked}
             aria-pressed={stoked}
-            className={`inline-flex min-h-10 cursor-pointer items-center justify-between gap-1 rounded-lg border px-2.5 text-[12px] font-medium transition-colors ${
+            className={`flex min-h-11 min-w-0 cursor-pointer flex-col items-start justify-center gap-0.5 overflow-hidden rounded-lg border px-2.5 py-1.5 text-left transition-colors ${
               stoked
                 ? "border-violet/35 bg-violet/12 text-foreground"
                 : "border-white/10 bg-white/[0.03] text-muted hover:border-white/20 hover:text-foreground"
             }`}
           >
-            <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center gap-1.5 text-[12px] font-medium leading-tight">
               <Flame
                 size={13}
-                className={stoked ? "text-violet" : "text-muted"}
+                className={`shrink-0 ${stoked ? "text-violet" : "text-muted"}`}
                 aria-hidden="true"
               />
               <span>Hearth</span>
             </span>
             <span
-              className={`font-mono text-[11px] ${
+              className={`font-mono text-[11px] leading-tight ${
                 stoked ? "text-violet" : "text-muted"
               }`}
             >
@@ -516,7 +516,7 @@ export function SidebarNav() {
               closeMenu(false);
               openCommandPalette();
             }}
-            className="inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-white/12 bg-white/[0.04] px-2.5 text-[13px] font-medium text-soft transition-colors hover:border-border-hover hover:bg-white/[0.08] hover:text-foreground"
+            className="hidden min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-white/12 bg-white/[0.04] px-2.5 text-[13px] font-medium text-soft transition-colors hover:border-border-hover hover:bg-white/[0.08] hover:text-foreground sm:inline-flex"
           >
             <Search size={15} className="shrink-0" aria-hidden="true" />
             <kbd className="whitespace-nowrap font-mono text-[12px] text-muted">

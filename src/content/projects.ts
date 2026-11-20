@@ -59,7 +59,7 @@ export const projects: Project[] = [
     year: "2026",
     metric: "1,000+ licenses · On-prem",
     architectureMoat:
-      "Air-gapped Ollama 4-bit grounding + idempotent n8n/AD lifecycle workflows",
+      "Append-only audit log, Active Directory validation, and Vitest/Playwright E2E security boundaries",
     stackSummary: "Next.js · Prisma · Ollama · n8n",
     tags: [
       "Next.js",
@@ -98,9 +98,9 @@ export const projects: Project[] = [
     domain: "AI Systems",
     status: "shipped",
     year: "2026",
-    metric: "Live · resumeforge.studio",
+    metric: "resumeforge.studio",
     architectureMoat:
-      "Evidence-bank grounding with client-side Typst WASM & deterministic 100-pt ATS rubric",
+      "Client-side Typst WASM PDF compilation, PostgreSQL Evidence Bank & 100-pt ATS rubric",
     stackSummary: "Next.js · TypeScript · Prisma · PostgreSQL · Typst WASM",
     tags: [
       "Next.js",
@@ -139,7 +139,7 @@ export const projects: Project[] = [
     domain: "AI Systems",
     status: "shipped",
     year: "2026",
-    metric: "8Q SQLite cache · SEC citations",
+    metric: "8-quarter SQLite cache · SEC citations",
     architectureMoat:
       "Stateful LangGraph tool loop with Groq → Gemini 429 failover & server-side BYOK",
     stackSummary: "Python · FastAPI · LangGraph · React",
@@ -224,7 +224,7 @@ export const projects: Project[] = [
     year: "2026",
     metric: "Client WASM · MediaPipe",
     architectureMoat:
-      "In-browser MediaPipe Vision WASM landmarks with PixiJS particle shaders & Matter.js physics",
+      "21-keypoint 3D temporal smoothing, zero server video upload, and /sandbox telemetry mode",
     stackSummary: "Next.js · TypeScript · MediaPipe WASM · PixiJS",
     tags: [
       "Next.js",
@@ -380,9 +380,9 @@ export const projects: Project[] = [
     domain: "Spatial & ML",
     status: "shipped",
     year: "2026",
-    metric: "Financial ML Lab · Live",
+    metric: "Financial ML Lab · Walk-Forward",
     architectureMoat:
-      "Walk-forward volatility forecasting & cost-adjusted portfolio stress testing",
+      "Walk-forward splits in scikit-learn & PyTorch with transaction-cost sensitivity benchmarks",
     stackSummary: "Python · scikit-learn · PyTorch · GitHub Pages",
     tags: [
       "Python",
@@ -418,9 +418,9 @@ export const projects: Project[] = [
     domain: "AI Systems",
     status: "shipped",
     year: "2026",
-    metric: "Agent A/B Harness · Live",
+    metric: "Agent A/B Harness · Telemetry",
     architectureMoat:
-      "Governed vs. baseline agent A/B harness with per-task cost, runtime & defect telemetry",
+      "Pytest-verified task suite logging token spend, wall-clock latency, and defect deltas",
     stackSummary: "Python · Pytest · AI Agents · Telemetry",
     tags: ["Python", "Pytest", "AI Agents", "Telemetry", "GitHub Pages"],
     repoUrl: "https://github.com/ZenzerJs/Ai-Lab",

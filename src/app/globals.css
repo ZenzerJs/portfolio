@@ -444,26 +444,22 @@
     animation: modal-enter 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  /* Pure CSS 220ms vertical slot-roll hover primitive */
+  /* Pure CSS 220ms vertical slot-roll hover primitive (single DOM text node) */
   .slot-roll {
     position: relative;
     display: inline-block;
-    height: 1.3em;
-    line-height: 1.3em;
+    height: 1.35em;
+    line-height: 1.35em;
     overflow: hidden;
     vertical-align: bottom;
   }
 
   .slot-roll-track {
-    display: flex;
-    flex-direction: column;
-    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .slot-roll-face {
     display: block;
-    height: 1.3em;
-    line-height: 1.3em;
+    height: 1.35em;
+    line-height: 1.35em;
+    text-shadow: 0 1.35em 0 currentColor;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Timeline marker node illumination driven via GSAP ScrollTrigger */
@@ -508,7 +504,7 @@
     .slot-trigger:focus-visible .slot-roll-track,
     .project-card:hover .slot-roll-track,
     .project-card:focus-within .slot-roll-track {
-      transform: translateY(-50%);
+      transform: translateY(-1.35em);
     }
 
     .project-card:hover .card-media-zoom,
@@ -547,6 +543,10 @@
     .aurora-slider:hover::-webkit-slider-thumb,
     .aurora-slider:hover::-moz-range-thumb {
       transform: none;
+    }
+
+    .slot-roll-track {
+      text-shadow: none;
     }
 
     .slot-trigger:hover .slot-roll-track,
