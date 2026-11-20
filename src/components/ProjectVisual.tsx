@@ -255,7 +255,7 @@ export function ProjectVisual({
           badge="On-prem · 1,000+ seats"
           badgeTone="teal"
           stages={CLINICAL_STAGES}
-          footer="Air-gapped hospital network · zero external cloud calls"
+          footer="On-premises hospital network · zero external LLM calls"
           ariaLabel="Clinical License Tracker architecture: Active Directory and intake flows through an idempotent n8n queue into Prisma RBAC license pools managing over 1,000 seats and a local 4-bit Ollama assistant"
         />
       </div>

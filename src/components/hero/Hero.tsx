@@ -27,7 +27,7 @@ export function Hero() {
       stoked={stoked}
       onStokeCabin={toggleStoked}
       className="min-h-[100svh]"
-      contentClassName="pt-20 pb-40 sm:pb-44 lg:pt-14 lg:pb-48"
+      contentClassName="pt-20 pb-56 sm:pb-52 lg:pt-14 lg:pb-52"
     >
       <div className="page-container">
         <div className="pointer-events-auto max-w-[42rem]">
@@ -104,7 +104,10 @@ export function Hero() {
           </div>
 
           {profile.available ? (
-            <p data-hero-item className="mt-5 text-[13px] text-muted">
+            <p
+              data-hero-item
+              className="mt-5 text-[13px] text-soft/90 drop-shadow-[0_1px_8px_rgba(7,11,20,0.85)]"
+            >
               {profile.availability} · {profile.location}
             </p>
           ) : null}

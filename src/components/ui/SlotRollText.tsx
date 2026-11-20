@@ -7,17 +7,13 @@ interface SlotRollTextProps {
 
 /**
  * Pure CSS 220ms vertical slot-roll hover primitive.
- * Duplicate clone carries aria-hidden so assistive tech reads text once.
+ * Renders text once in the DOM and projects the rolling copy via text-shadow
+ * so assistive tech, textContent, and copy-paste never duplicate labels.
  */
 export function SlotRollText({ children, className = "" }: SlotRollTextProps) {
   return (
     <span className={`slot-roll ${className}`}>
-      <span className="slot-roll-track">
-        <span className="slot-roll-face">{children}</span>
-        <span className="slot-roll-face" aria-hidden="true">
-          {children}
-        </span>
-      </span>
+      <span className="slot-roll-track">{children}</span>
     </span>
   );
 }

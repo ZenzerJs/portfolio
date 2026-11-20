@@ -49,6 +49,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/favicon.ico",
+        destination: "/icon",
+      },
+    ];
+  },
   async headers() {
     return [
       {

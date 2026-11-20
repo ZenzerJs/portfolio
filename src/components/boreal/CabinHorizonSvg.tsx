@@ -761,17 +761,18 @@ const ClearingScene = memo(function ClearingScene({
           <rect x="1082.5" y="251" width="23" height="2.6" rx="1.3" />
         </g>
 
-        {/* Roof: fascia, snow blanket, ridge crest */}
-        <path d="M1042 272L1094 204L1146 272H1139L1094 212L1049 272Z" fill={WOOD_DARK} />
-        <path d="M1094 198L1134 186L1190 258L1150 272Z" fill={url("roof")} />
+        {/* Roof: solid backing, fascia, snow blanket, ridge crest */}
+        <path d="M1093 203L1134 190L1188 260L1135 272Z" fill={WOOD_DARK} />
+        <path d="M1042 272L1094 204L1148 272H1139L1094 212L1049 272Z" fill={WOOD_DARK} />
+        <path d="M1093.5 196L1134 186L1190 258L1147 272L1093.5 203Z" fill={url("roof")} />
         <path d="M1104 214L1144 202M1114 230L1154 218M1126 246L1166 234" stroke={p.roofSnowBottom} strokeOpacity={0.4} strokeWidth={0.8} />
         <path
-          d="M1148 270L1190 257.5L1191 263Q1186 266 1182 264Q1177 268 1172 266.5Q1166 270.5 1161 268.8Q1155 273.5 1150 272.6Z"
+          d="M1146 270L1190 257.5L1191 263Q1186 266 1182 264Q1177 268 1172 266.5Q1166 270.5 1161 268.8Q1155 273.5 1148 272.6Z"
           fill={p.roofSnowBottom}
         />
         <path d={ICICLES} fill={p.icicle} opacity={0.8} />
         <path d="M1036 272Q1036 266 1041 265L1094 196L1094 203.5L1044 270Q1040 273.5 1036 272Z" fill={url("roof")} />
-        <path d="M1094 198L1134 186" stroke="#f8fbff" strokeOpacity={0.85} strokeWidth={1.5} strokeLinecap="round" />
+        <path d="M1094 196L1134 186" stroke="#f8fbff" strokeOpacity={0.85} strokeWidth={1.5} strokeLinecap="round" />
         <path d="M1041 265L1094 196" stroke="#f8fbff" strokeOpacity={0.55} strokeWidth={1} strokeLinecap="round" />
 
         {/* Stone chimney */}

@@ -573,6 +573,16 @@ export function BorealHeroStage({
         }}
       />
 
+      {/* Mobile readability scrim separating hero copy from the snowy cabin horizon */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 bottom-[22%] z-[6] lg:hidden"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(7, 11, 20, 0.56) 0%, rgba(7, 11, 20, 0.48) 68%, rgba(7, 11, 20, 0) 100%)",
+        }}
+      />
+
       {/* Hero typography container */}
       <div
         ref={copyRef}
@@ -584,7 +594,7 @@ export function BorealHeroStage({
       {/* Multi-plane architectural snowy forest & lone Nordic cabin with soft bottom feather */}
       <div
         ref={horizonRef}
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[44%] min-h-[240px] max-h-[390px] w-full overflow-hidden sm:h-[46%] lg:h-[48%]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[34%] min-h-[200px] max-h-[300px] w-full overflow-hidden sm:h-[42%] sm:min-h-[240px] sm:max-h-[360px] lg:h-[48%] lg:max-h-[390px]"
         style={{
           WebkitMaskImage:
             "linear-gradient(to bottom, black 0%, black 58%, rgba(0,0,0,0.72) 78%, rgba(0,0,0,0.22) 92%, transparent 100%)",
