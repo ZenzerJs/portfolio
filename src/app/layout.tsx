@@ -1,28 +1,34 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk, Syne } from "next/font/google";
+import { JetBrains_Mono, Manrope, Syne } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { SmoothScrollProvider } from "@/components/boreal/SmoothScrollProvider";
+import { BorealAtmosphereProvider } from "@/components/boreal/BorealAtmosphereContext";
+import { BorealBackdropCanvas } from "@/components/boreal/BorealBackdropCanvas";
+import { PageTransitionShell } from "@/components/boreal/PageTransitionShell";
+import { CommandPalette } from "@/components/layout/CommandPalette";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-  preload: false,
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["600", "700"],
+  variable: "--font-syne",
   display: "swap",
   preload: true,
 });
 
-// Only 2 weights — 600 for headings, 700 for display titles
-const syne = Syne({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["600", "700"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
+  display: "swap",
+  preload: true,
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
   display: "swap",
   preload: true,
 });
@@ -65,14 +71,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`h-full antialiased ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${syne.variable}`}
+      className={`h-full antialiased ${syne.variable} ${manrope.variable} ${jetbrainsMono.variable}`}
     >
-      <body suppressHydrationWarning className="min-h-full w-full bg-background text-foreground">
+      <body
+        suppressHydrationWarning
+        className="min-h-full w-full bg-background text-foreground"
+      >
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <ScrollProgress />
-        {children}
+        <SmoothScrollProvider>
+          <BorealAtmosphereProvider>
+            <BorealBackdropCanvas />
+            <ScrollProgress />
+            <PageTransitionShell>{children}</PageTransitionShell>
+            <CommandPalette />
+          </BorealAtmosphereProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

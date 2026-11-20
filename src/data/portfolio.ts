@@ -1,25 +1,39 @@
 import { laurierCourses } from "@/data/courses";
 
+export type Experience = {
+  period: string;
+  company: string;
+  location: string;
+  role: string;
+  description: string;
+  bullets: string[];
+};
+
 export type CourseworkEntry = {
   code: string;
   label: string;
   status: "completed" | "in-progress";
-  grade?: string;
   bohrUrl?: string;
   calendarUrl?: string;
 };
 
 export const profile = {
   name: "Jayden Saha",
-  role: "Full-Stack Software & AI Systems Engineer · IT Operations @ THP",
-  location: "Greater Toronto Area, ON, Canada",
-  availability: "Open to Fall 2026 / Winter 2027 SWE & AI Roles",
+  shortRole: "CS Student · Full-Stack & AI Systems",
+  role: "Computer Science Student @ Wilfrid Laurier University · Full-Stack & AI Systems",
+  location: "Waterloo / GTA, ON",
+  availability: "Open to Summer 2027 SWE, Data & Finance Internships",
   tagline:
-    "Engineering autonomous multi-agent pipelines, privacy-first enterprise automations, and high-craft web applications.",
+    "Building local-first AI tools, multi-agent research systems, and production web platforms.",
   intro:
-    "Computer Science & Management student at Wilfrid Laurier University with enterprise IT experience at Trillium Health Partners. Focused on stateful LangGraph orchestrations, on-prem local LLMs, and high-performance Next.js architectures.",
+    "Honours Computer Science undergraduate at Wilfrid Laurier University. Previously completed a Software Development Co-op in IT Operations at Trillium Health Partners, where I built an internal clinical license portal and on-premises Ollama assistant.",
   email: "jayden.saha.dev@gmail.com",
   available: true,
+  proofPoints: [
+    { value: "1,000+", label: "Clinical licenses managed on-prem at THP" },
+    { value: "6 Live", label: "Public deployed web apps & ML labs" },
+    { value: "16 Cities", label: "Multi-modal GIS routing in WC26 Travel Mapper" },
+  ] satisfies Array<{ value: string; label: string }>,
 };
 
 export const links = {
@@ -29,98 +43,64 @@ export const links = {
 };
 
 export const navSections = [
-  { id: "top", label: "Home" },
-  { id: "about", label: "About" },
+  { id: "top", label: "Overview" },
+  { id: "work", label: "Work" },
   { id: "experience", label: "Experience" },
-  { id: "systems", label: "Architecture" },
-  { id: "works", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ] as const;
 
-export const heroMarqueeItems = [
-  "Jayden Saha",
-  "Multi-Agent AI",
-  "LangGraph",
-  "Next.js",
-  "TypeScript",
-  "Python",
-  "FastAPI",
-  "Local LLMs & n8n",
-  "PyTorch",
-  "Java",
-  "SQL",
-];
-
 export const aboutContent = {
-  blocks: [
-    {
-      label: "About Me",
-      body: "I'm Jayden — an undergraduate Computer Science student at Wilfrid Laurier University (Management Option), working in IT Operations at Trillium Health Partners. I build scalable software, autonomous multi-agent graphs, and privacy-first automation tools.",
-    },
-    {
-      label: "Why I Build",
-      body: "I enjoy engineering end-to-end systems that solve real operational friction: multi-agent pipelines that decompose complex reasoning, on-prem clinical trackers with local LLMs, and high-craft web applications with sub-second performance.",
-    },
-    {
-      label: "Current Focus",
-      body: "Building stateful agent graphs with LangGraph, deploying privacy-first AI workflows in healthcare infrastructure, and completing second-year coursework in OOP (Java) and Database Systems (SQL). Open to Fall 2026 / Winter 2027 software engineering opportunities.",
-    },
-  ],
-  highlights: [
-    { label: "Location", value: "Greater Toronto Area (Mississauga / Brampton)" },
-    { label: "Education", value: "BSc Computer Science @ Laurier (2nd Year)" },
-    { label: "Experience", value: "IT Operations & Automation @ THP" },
-    { label: "Core Stack", value: "Python · LangGraph · TypeScript · Next.js · FastAPI" },
-  ],
-  interests: [
-    "Multi-Agent AI Systems",
-    "Privacy-First Local LLMs",
-    "Full-Stack Web Architecture",
-    "Reinforcement Learning",
-    "Developer Tooling & Compilers",
-    "Geospatial & Financial ML",
+  summary:
+    "I build software that holds up under real operational constraints: strict privacy boundaries, verifiable AI outputs, and deterministic test suites. Most of my work sits at the intersection of full-stack web engineering, local LLM inference, and workflow automation.",
+  focus:
+    "Following my Software Development Co-op at Trillium Health Partners, I am focused on ResumeForge (resumeforge.studio) with PostgreSQL and client-side Typst WASM compilation, alongside Ripple (financial ML lab) and Ai-Lab (agent A/B evaluation).",
+  facts: [
+    { label: "Base", value: "Waterloo & Greater Toronto Area, ON" },
+    { label: "Degree", value: "Honours BSc Computer Science · Expected ~2030 (with co-op)" },
+    { label: "Recent Role", value: "Student – IT Operations (Software Development Co-op) @ Trillium Health Partners" },
+    { label: "Primary Stack", value: "TypeScript · Python · Next.js · PostgreSQL · FastAPI" },
   ],
 };
 
-export const experiences = [
+export const experiences: Experience[] = [
   {
-    period: "May 2026 — Present",
+    period: "May 2026 – Aug. 2026",
     company: "Trillium Health Partners",
     location: "Mississauga, ON",
-    role: "IT Operations & Clinical Systems Automation",
+    role: "Student – IT Operations (Software Development Co-op)",
     description:
-      "Supporting enterprise hospital network infrastructure while architecting an on-premise clinical license management tool using local LLMs and n8n event-driven automation.",
+      "Built an internal clinical license operations portal and on-premises Ollama assistant while supporting enterprise data-center operations.",
     bullets: [
-      "Engineered a privacy-first, locally-hosted clinical license tracker pairing local LLMs (Ollama / llama.cpp) and n8n to automate validation workflows without external cloud APIs",
-      "Maintained data-center hardware infrastructure, rack documentation, and asset lifecycles utilizing Sunbird dcTrack and Power IQ",
-      "Provided enterprise IT support across Active Directory, VMware virtual environments, and clinical systems",
+      "Designed and deployed an internal clinical license operations portal in Next.js, TypeScript, and Prisma, replacing spreadsheet tracking for 1,000+ software licenses with live capacity tracking, assignment workflows, and an Action Queue.",
+      "Implemented request and lifecycle workflows with isolated staff/learner pools, role-based access control (RBAC), idempotent n8n intake with Active Directory validation, and append-only audit logging.",
+      "Engineered an on-premises assistant using 4-bit quantized local models through Ollama with context-window management and live inventory grounding to preserve data privacy, verified with Vitest and Playwright test suites.",
+      "Maintained Sunbird dcTrack and Power IQ infrastructure documentation while supporting enterprise backups, server maintenance, and data-center operations.",
     ],
   },
   {
-    period: "Jan 2024 — Jun 2024",
+    period: "Feb. 2024 – June 2024",
     company: "Career Education Council",
-    location: "Guelph, ON",
-    role: "iOS Application Development Intern",
+    location: "Remote",
+    role: "App Developer",
     description:
-      "Engineered Scholar's Spark — a native iOS application connecting students with academic opportunities — through weekly iterative prototypes in Swift and Xcode.",
+      "Built Scholars Spark, an iOS application in Swift and Xcode connecting students with academic resources, and presented the working prototype to industry professionals.",
     bullets: [
-      "Developed functional Swift prototypes in Xcode following Apple Human Interface Guidelines",
-      "Facilitated weekly stakeholder design reviews and conducted QA testing to eliminate logic errors prior to release",
-      "Earned official CEC Swift Development Certification upon presenting the project to regional leaders",
+      "Engineered Scholars Spark, an iOS application built with Swift and Xcode connecting students to academic resources, and presented the prototype to industry professionals.",
+      "Delivered weekly test-driven iterations based on mentor feedback, optimizing UI state transitions and local data persistence, and earned Swift proficiency certification.",
     ],
   },
   {
-    period: "Mar 2022 — Present",
+    period: "Mar. 2022 – Present",
     company: "Volunteering MBC",
     location: "Mississauga, ON",
     role: "SAVVY Volunteer & Community Lead",
     description:
       "Facilitated biweekly cross-generational community sessions and coordinated regional volunteer events across Peel Region.",
     bullets: [
-      "Facilitated structured intergenerational workshops and community engagement initiatives",
-      "Collaborated with regional coordinators to support volunteer recruitment and event planning",
+      "Facilitated structured intergenerational workshops and community engagement initiatives across Peel Region.",
+      "Collaborated with regional coordinators on volunteer recruitment, onboarding, and event logistics.",
     ],
   },
 ];
@@ -130,43 +110,52 @@ export const educationEntries = [
     school: "Wilfrid Laurier University",
     shortName: "Laurier",
     country: "Waterloo, ON, Canada",
-    degree: "Honours BSc — Computer Science, Business Management Option",
-    yearRange: "2024 – 2028",
+    degree: "Honours BSc — Computer Science",
+    yearRange: "2025 – Expected ~2030",
     highlights: [
-      "Second-year Computer Science undergraduate — completed CP104 (98%) and CP164 (99%) with high distinction",
-      "Accelerated enrollment: Taking CP213 (OOP in Java) and CP363 (Databases in SQL)",
-      "Participant in University of Waterloo Euclid Mathematics Contest",
+      "Second-year Honours Computer Science student (started September 2025), planning a Mathematics Minor and Big Data Systems concentration (not yet formally declared).",
+      "Completed CP104 (Intro to Programming), CP164 (Data Structures & Algorithms), and CP363 (Database Management Systems).",
+      "Coursework covers Java object-oriented programming (CP213), SQL database management systems (CP363), linear algebra, and calculus.",
+      "Participant in the University of Waterloo Euclid Mathematics Contest.",
     ],
     coursework: [
       {
         code: "CP104",
         label: laurierCourses.cp104.label,
         status: "completed",
-        grade: "98%",
         bohrUrl: laurierCourses.cp104.bohrUrl,
         calendarUrl: laurierCourses.cp104.calendarUrl,
       },
       {
         code: "CP164",
-        label: laurierCourses.cp164.label,
+        label: "Data Structures & Algorithms",
         status: "completed",
-        grade: "99%",
         bohrUrl: laurierCourses.cp164.bohrUrl,
         calendarUrl: laurierCourses.cp164.calendarUrl,
       },
       {
         code: "CP213",
-        label: laurierCourses.cp213.label,
+        label: "Object-Oriented Programming (Java)",
         status: "in-progress",
         bohrUrl: laurierCourses.cp213.bohrUrl,
         calendarUrl: laurierCourses.cp213.calendarUrl,
       },
       {
         code: "CP363",
-        label: "Databases (Early Enrollment)",
-        status: "in-progress",
+        label: "Database Management Systems (SQL)",
+        status: "completed",
         bohrUrl: laurierCourses.cp363.bohrUrl,
         calendarUrl: laurierCourses.cp363.calendarUrl,
+      },
+      {
+        code: "MA122",
+        label: "Linear Algebra",
+        status: "completed",
+      },
+      {
+        code: "MA103",
+        label: "Calculus II",
+        status: "completed",
       },
     ] satisfies CourseworkEntry[],
   },
@@ -174,47 +163,58 @@ export const educationEntries = [
 
 export const skillGroups = [
   {
-    title: "AI & Machine Learning",
+    title: "AI & LLM Systems",
     skills: [
       "LangGraph",
       "LangChain",
       "LangSmith",
-      "Local LLMs (Ollama/llama.cpp)",
+      "Ollama",
+      "Local LLM Inference",
+      "LLM Tool Calling",
+      "Groq API",
       "PyTorch",
       "scikit-learn",
-      "Groq LPU API",
-      "Reinforcement Learning",
-      "Computer Vision (MediaPipe)",
+      "MediaPipe Vision",
     ],
   },
   {
     title: "Languages & Frameworks",
     skills: [
-      "Python",
       "TypeScript",
+      "Python",
       "JavaScript",
-      "Next.js 14/15",
+      "Java",
+      "Swift",
+      "SQL",
+      "HTML/CSS",
+      "Next.js",
       "React",
       "FastAPI",
-      "Java",
-      "SQL",
-      "Swift",
       "Tailwind CSS",
+      "Radix UI",
+      "Motion",
+      "Zod",
+      "Mapbox GL JS",
+      "WebGL",
+      "CodeMirror 6",
       "Typst",
     ],
   },
   {
-    title: "Backend & Systems Tooling",
+    title: "Backend, Testing & Tooling",
     skills: [
-      "n8n Automation",
-      "Prisma ORM",
-      "PostgreSQL / SQLite",
+      "Prisma",
+      "SQLite",
+      "PostgreSQL",
+      "REST APIs",
+      "n8n",
+      "Playwright",
+      "Vitest",
       "Docker",
-      "Git & GitHub",
+      "Git",
+      "GitHub Actions",
       "Vercel",
       "Railway",
-      "REST APIs",
-      "Mapbox GL JS",
     ],
   },
   {
@@ -223,22 +223,11 @@ export const skillGroups = [
       "Sunbird dcTrack",
       "Power IQ",
       "Active Directory",
+      "RBAC",
+      "Linux",
       "VMware",
       "Veeam Backup",
       "Data Center Operations",
-      "Incident Response",
     ],
   },
-];
-
-export const heroFocus = [
-  "Multi-Agent AI",
-  "LangGraph",
-  "Next.js",
-  "TypeScript",
-  "Python",
-  "FastAPI",
-  "Local LLMs & n8n",
-  "PyTorch",
-  "SQL",
 ];

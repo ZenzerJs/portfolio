@@ -5,7 +5,7 @@ export type LaurierCourseLinks = {
   calendarUrl: string;
 };
 
-export const laurierCourses: Record<string, LaurierCourseLinks> = {
+export const laurierCourses = {
   cp104: {
     code: "CP104",
     label: "Intro to Programming",
@@ -34,4 +34,4 @@ export const laurierCourses: Record<string, LaurierCourseLinks> = {
     calendarUrl:
       "https://academic-calendar.wlu.ca/course.php?c=72538&cal=1&d=2948&s=1118&y=90",
   },
-};
+} satisfies Record<string, LaurierCourseLinks>;

@@ -1,93 +1,76 @@
-# 🚀 Zenzer — Personal Engineering Portfolio
+# Jayden Saha — Engineering Portfolio
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-11.0-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![Vercel](https://img.shields.io/badge/Deployment-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
+Personal software engineering and AI systems portfolio built with **Next.js 16 (App Router)**, **React 19**, **TypeScript 5**, **Tailwind CSS v4**, **GSAP / ScrollTrigger**, **Lenis**, **Motion**, and **Vitest**.
 
-> A personal software engineering portfolio built with Next.js 15 App Router, TypeScript, and fluid Framer Motion visual effects. Features interactive project showcases, interactive tech skill chips, custom WebGL/CSS Aurora backgrounds, and full SEO optimization.
+## Stack
 
----
+- **Framework**: Next.js 16 (`App Router`, Server Components, dynamic `next/og` metadata routes)
+- **UI & Styling**: React 19, Tailwind CSS v4 (`@tailwindcss/postcss`), Lucide icons, Syne / Manrope / JetBrains Mono typography
+- **Motion & Graphics**: `gsap` + `ScrollTrigger`, `lenis`, `motion` (`motion/react` with `<MotionConfig reducedMotion="user">`), and native WebGL Aurora Veil shader + snow canvas (`BorealBackdropCanvas.tsx`)
+- **Testing & Quality**: Vitest, TypeScript strict checking (`tsc --noEmit`), ESLint 9 (`eslint-config-next`)
+- **Deployment**: Vercel (`vercel.json` security headers and cache policies mirrored in `next.config.ts`)
 
-## 🌟 Key Features
+## Key Features
 
-- **Fluid UI & Micro-Animations**: Built with Framer Motion primitives, including dynamic Aurora backgrounds (`Aurora.tsx`), blur-reveal text headers (`BlurRevealText.tsx`), magnetic hover buttons (`Magnetic.tsx`), and smooth scroll progress bars (`ScrollProgress.tsx`).
-- **Interactive Project Showcase**: Browse featured engineering projects (`/projects`), filter by tech stack tags (`ProjectsFilter.tsx`), and explore deep-dive case study pages (`/projects/[slug]`).
-- **Experience & Education Timeline**: Interactive career highlights, work experience cards (`ExperienceCard.tsx`), and academic course tracking (`courses.ts`).
-- **Automated SEO & Metadata**: Dynamically generated Open Graph social images (`opengraph-image.tsx`), automatic sitemaps (`sitemap.ts`), and `robots.ts` search engine indexing configurations.
-- **Responsive & Accessible**: Dark-themed responsive layout with accessible contrast standards and screen-reader optimizations.
+- **Boreal Frost Atmosphere**: Single-rail navigation (`SidebarNav`), WebGL Aurora Veil & Waves backdrop with blizzard-to-airy-snow scroll progression and sidebar-offset reading mask (`BorealBackdropCanvas.tsx`), 5-plane parallax Nordic cabin (`CabinHorizonSvg.tsx`), flagship project showcase with real live screenshots and blueprint pipelines (`ProjectVisual`), scrubbed Experience timeline spine, coursework grade count-ups, and copyable contact actions.
+- **Project Archive & Case Studies**: Filterable archive at `/projects` and deep-dive pages at `/projects/[slug]` with sandboxed interactive live demo embeds (`DemoModule`) and previous/next project navigation.
+- **Metadata & SEO**: Dynamic `src/app/icon.tsx`, `src/app/opengraph-image.tsx`, `src/app/sitemap.ts`, `src/app/robots.ts`, and escaped JSON-LD structured data.
+- **Security & Caching**: `Strict-Transport-Security`, `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` configured in both `vercel.json` and `next.config.ts`, with `Cache-Control: public, max-age=0, must-revalidate` on PDF assets such as `/resume.pdf`.
 
----
-
-## 🏗️ Repository Architecture
+## Project Structure
 
 ```text
-portfolio/
-├── public/                     # Static assets & downloadable resume PDF
+.
+├── .github/workflows/ci.yml   # GitHub Actions CI (typecheck, lint, test, build)
+├── public/
+│   ├── projects/              # Captured project screenshots
+│   └── resume.pdf             # Printable/downloadable resume
 ├── src/
-│   ├── app/                    # Next.js 15 App Router pages & metadata routes
-│   │   ├── projects/           # Projects grid & dynamic [slug] detail pages
-│   │   ├── layout.tsx          # Global site shell & font setup
-│   │   ├── opengraph-image.tsx # Dynamic OG social image generator
-│   │   ├── sitemap.ts          # Automatic XML sitemap route
-│   │   └── page.tsx            # Main portfolio landing page
-│   ├── components/             # Modular UI components
-│   │   ├── about/              # AboutSection & bio components
-│   │   ├── education/          # EducationSection & coursework
-│   │   ├── experience/         # ExperienceCard & career timeline
-│   │   ├── hero/               # Hero headline & call-to-action
-│   │   ├── layout/             # SidebarNav, ContactSection, GradientBackground
-│   │   └── ui/                 # Framer Motion primitives (Aurora, Magnetic, BlurReveal)
-│   ├── content/                # Project case studies & showcase metadata (`projects.ts`)
-│   ├── data/                   # Structured portfolio information (`portfolio.ts`, `courses.ts`)
-│   └── lib/                    # Helper utilities & site constants (`site.ts`)
-└── vercel.json                 # Vercel deployment configuration
+│   ├── __tests__/             # Vitest unit & data-integrity tests
+│   ├── app/                   # Next.js 16 App Router pages & metadata routes
+│   │   ├── projects/          # Archive (/projects) and case studies (/projects/[slug])
+│   │   ├── globals.css        # Tailwind v4 tokens & component styles
+│   │   ├── icon.tsx           # Dynamic 32x32 PNG favicon
+│   │   ├── layout.tsx         # Root shell & Syne / Manrope / JetBrains Mono fonts
+│   │   ├── not-found.tsx      # 404 route
+│   │   ├── opengraph-image.tsx# Dynamic 1200x630 Open Graph card
+│   │   ├── page.tsx           # Portfolio homepage
+│   │   ├── robots.ts          # Dynamic robots.txt
+│   │   └── sitemap.ts         # Dynamic XML sitemap
+│   ├── components/            # Modular React components (hero, layout, experience, education, UI)
+│   ├── content/               # Project metadata & case study entries (projects.ts)
+│   ├── data/                  # Profile, experience, skills & coursework data
+│   └── lib/                   # Site configuration and URL helpers
+├── next.config.ts             # Next.js config & mirrored security headers
+├── vercel.json                # Vercel deployment headers & cache rules
+└── vitest.config.ts           # Vitest configuration with @/* path alias
 ```
 
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js**: `v18.0.0+`
-- **npm** or **pnpm**
+- **Node.js** `22.12+` (or `24+`)
+- **npm**
 
----
+### Local Development
 
-### Local Development Setup
+```bash
+git clone https://github.com/ZenzerJs/portfolio.git
+cd portfolio
+npm install
+npm run dev
+```
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/ZenzerJs/portfolio.git
-   cd portfolio
-   ```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+## Scripts
 
-3. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in Browser**:
-   Navigate to [http://localhost:3000](http://localhost:3000).
-
----
-
-## 🛠️ Verification & Scripts
-
-| Command | Action |
+| Command | Description |
 | :--- | :--- |
-| `npm run dev` | Starts local Next.js development server |
-| `npm run build` | Compiles production build bundle |
-| `npm run start` | Serves production build locally |
-| `npm run lint` | Checks codebase against ESLint rules |
-
----
-
-*Developed by [ZenzerJs](https://github.com/ZenzerJs)*
+| `npm run dev` | Start the local Next.js development server |
+| `npm run build` | Build the production Next.js bundle |
+| `npm run start` | Serve the production build locally |
+| `npm run typecheck` | Run TypeScript type checking (`tsc --noEmit`) |
+| `npm run lint` | Run ESLint across the repository |
+| `npm test` | Run the Vitest test suite (`vitest run`) |

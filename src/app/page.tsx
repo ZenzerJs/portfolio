@@ -1,17 +1,21 @@
+import { ViewTransition } from "react";
 import { AboutSection } from "@/components/about/AboutSection";
 import { EducationSection } from "@/components/education/EducationSection";
 import { ExperienceList } from "@/components/experience/ExperienceList";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { Hero } from "@/components/hero/Hero";
+import { HeroWorkBridge } from "@/components/hero/HeroWorkBridge";
 import { ContactSection } from "@/components/layout/ContactSection";
 import { Footer } from "@/components/layout/Footer";
-import { GradientBackground } from "@/components/layout/GradientBackground";
 import { SidebarNav } from "@/components/layout/SidebarNav";
-import { ArchitectureMatrix } from "@/components/architecture/ArchitectureMatrix";
-import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SkillChips } from "@/components/SkillChips";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { RevealSection } from "@/components/ui/MotionPrimitives";
-import { educationEntries, experiences, links, profile } from "@/data/portfolio";
+import {
+  educationEntries,
+  experiences,
+  links,
+  profile,
+} from "@/data/portfolio";
 import { siteConfig } from "@/lib/site";
 
 const structuredData = {
@@ -19,7 +23,7 @@ const structuredData = {
   "@type": "Person",
   name: profile.name,
   url: siteConfig.url.toString(),
-  jobTitle: profile.role.split("·")[0]?.trim() ?? "IT Operations",
+  jobTitle: profile.shortRole,
   email: profile.email,
   sameAs: [links.github, links.linkedin],
 };
@@ -27,71 +31,85 @@ const structuredData = {
 export default function HomePage() {
   return (
     <div className="site-page">
-      <GradientBackground />
       <SidebarNav />
 
-      <main id="main-content" className="site-main">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-
-        <Hero />
-
-        <RevealSection id="about" className="page-container pb-16 pt-10 sm:pt-14">
-          <SectionHeader
-            title="About"
-            subtitle="CS @ Laurier · IT Operations @ Trillium Health Partners · builder at heart."
+      <div className="site-shell">
+        <ViewTransition
+          enter={{
+            "nav-forward": "nav-forward",
+            "nav-back": "nav-back",
+            default: "none",
+          }}
+          exit={{
+            "nav-forward": "nav-forward",
+            "nav-back": "nav-back",
+            default: "none",
+          }}
+          default="none"
+        >
+          <main id="main-content" className="flex-1">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+            }}
           />
-          <AboutSection />
-        </RevealSection>
 
-        <RevealSection id="experience" className="page-container pb-16 pt-6">
-          <SectionHeader
-            title="Experience"
-            subtitle="Roles across healthcare IT and software development."
-            count={experiences.length}
-            countLabel="positions"
-          />
-          <ExperienceList experiences={experiences} />
-        </RevealSection>
+          <Hero />
 
-        <RevealSection id="systems" className="page-container pb-16 pt-6">
-          <SectionHeader
-            title="Architecture"
-            subtitle="6-system engineering blueprint: technical moats, verification gates, and signals."
-          />
-          <ArchitectureMatrix />
-        </RevealSection>
+          <HeroWorkBridge />
 
-        <RevealSection id="works" className="page-container pb-16 pt-6">
-          <SectionHeader
-            title="Projects"
-            subtitle="ML tools, AI agents, full-stack apps, and coursework experiments."
-          />
-          <FeaturedProjects />
-        </RevealSection>
+          <section id="work" className="page-container pt-8 pb-16 sm:pt-10">
+            <SectionHeader
+              title="Selected Work"
+              subtitle="Shipped AI pipelines, full-stack systems, and spatial tools built end to end."
+            />
+            <FeaturedProjects />
+          </section>
 
-        <RevealSection id="skills" className="page-container pb-16 pt-6">
-          <SectionHeader title="Skills" subtitle="Technologies I use and keep sharpening." />
-          <SkillChips />
-        </RevealSection>
+          <section
+            id="experience"
+            className="page-container pt-14 pb-16 sm:pt-16"
+          >
+            <SectionHeader
+              title="Experience"
+              subtitle="Software engineering and infrastructure roles across healthcare IT and mobile development."
+            />
+            <ExperienceList experiences={experiences} />
+          </section>
 
-        <RevealSection id="education" className="page-container pb-16 pt-6">
-          <SectionHeader title="Education" subtitle="Academic background and relevant coursework." />
-          <div className="space-y-6">
-            {educationEntries.map((entry) => (
-              <EducationSection key={entry.school} {...entry} />
-            ))}
-          </div>
-        </RevealSection>
+          <section id="skills" className="page-container pt-14 pb-16 sm:pt-16">
+            <SectionHeader
+              title="Technical Stack"
+              subtitle="Languages, frameworks, AI tooling, and infrastructure used across shipped systems."
+            />
+            <SkillChips />
+          </section>
 
-        <RevealSection id="contact" className="">
-          <ContactSection />
-        </RevealSection>
+          <section
+            id="education"
+            className="page-container pt-14 pb-16 sm:pt-16"
+          >
+            <SectionHeader
+              title="Education & Background"
+              subtitle="Computer science foundation, coursework, and current engineering focus."
+            />
+            <div className="space-y-6">
+              {educationEntries.map((entry) => (
+                <EducationSection key={entry.school} {...entry} />
+              ))}
+              <AboutSection />
+            </div>
+          </section>
+
+          <section id="contact" className="page-container pt-14 pb-20 sm:pt-16">
+            <ContactSection />
+          </section>
+          </main>
+        </ViewTransition>
 
         <Footer />
-      </main>
+      </div>
     </div>
   );
 }
