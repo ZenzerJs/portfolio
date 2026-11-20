@@ -1,18 +1,49 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll } from "motion/react";
+import { useEffect, useRef } from "react";
+import { scrollBus } from "@/components/boreal/SmoothScrollProvider";
 
-/** Lightweight scroll progress — no spring (springs recompute every frame = lag). */
 export function ScrollProgress() {
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
+  const barRef = useRef<HTMLDivElement>(null);
 
-  if (shouldReduceMotion) return null;
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motionQuery.matches) return;
+
+    let rafId: number | null = null;
+
+    const update = () => {
+      rafId = null;
+      bar.style.transform = `scaleX(${scrollBus.progress})`;
+    };
+
+    const schedule = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(update);
+    };
+
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, []);
 
   return (
-    <motion.div
+    <div
+      ref={barRef}
       className="scroll-progress"
-      style={{ scaleX: scrollYProgress }}
+      style={{ transform: "scaleX(0)" }}
+      aria-hidden="true"
     />
   );
 }

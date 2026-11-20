@@ -4,9 +4,9 @@ export const siteUrl = new URL(
 
 export const siteConfig = {
   name: "Jayden Saha",
-  title: "Jayden Saha — Full-Stack & AI Systems Engineer",
+  title: "Jayden Saha — CS Student · Full-Stack & AI Systems",
   description:
-    "Full-Stack Software Engineer and AI Systems builder studying Computer Science at Wilfrid Laurier University with IT Operations experience at Trillium Health Partners. Specializing in LangGraph multi-agent orchestrations, local LLM automations, and modern Next.js platforms.",
+    "Computer Science student at Wilfrid Laurier University and former IT Operations (Software Development Co-op) at Trillium Health Partners. Building full-stack web platforms, local-first AI tools, and reproducible ML systems.",
   url: siteUrl,
   locale: "en_CA",
   keywords: [
@@ -16,14 +16,16 @@ export const siteConfig = {
     "AI systems engineer",
     "LangGraph",
     "LangChain",
+    "Ollama",
     "local LLMs",
-    "n8n automation",
+    "Typst WASM",
+    "n8n",
     "Trillium Health Partners",
     "Wilfrid Laurier University",
     "Python",
     "FastAPI",
     "Next.js",
     "TypeScript",
-    "PyTorch",
+    "Prisma",
   ],
 } as const;

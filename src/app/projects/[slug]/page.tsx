@@ -30,11 +30,15 @@ export async function generateMetadata({ params }: Props) {
       url: url.toString(),
       siteName: siteConfig.name,
       type: "article",
+      ...(project.image
+        ? { images: [{ url: project.image, alt: `${project.title} preview` }] }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: project.title,
       description: project.oneLiner,
+      ...(project.image ? { images: [project.image] } : {}),
     },
   };
 }

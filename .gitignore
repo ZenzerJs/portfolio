@@ -40,5 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
-.env*
+# local agent configs and repository dumps
+.agents/
+.taste-skill/
+CODEBASE.md
+codebase.xml
+Other Projects (XML)/

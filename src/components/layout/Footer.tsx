@@ -1,9 +1,14 @@
+import { profile } from "@/data/portfolio";
+
 export function Footer() {
   return (
-    <footer className="page-container border-t border-[var(--panel-border)] py-8">
-      <p className="text-center text-xs text-muted">
-        © {new Date().getFullYear()} Jayden Saha · Built with Next.js
-      </p>
+    <footer className="border-t border-border py-8">
+      <div className="page-container flex flex-col gap-2 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {new Date().getFullYear()} {profile.name}
+        </p>
+        <p>{profile.location}</p>
+      </div>
     </footer>
   );
 }
