@@ -59,7 +59,7 @@ export const aboutContent = {
     "Following my Software Development Co-op at Trillium Health Partners, I am focused on ResumeForge (resumeforge.studio) with PostgreSQL and client-side Typst WASM compilation, alongside Ripple (financial ML lab) and Ai-Lab (agent A/B evaluation).",
   facts: [
     { label: "Base", value: "Waterloo & Greater Toronto Area, ON" },
-    { label: "Degree", value: "Honours BSc Computer Science · Expected 2030 (with co-op)" },
+    { label: "Degree", value: "Honours BSc Computer Science · Expected April 2029" },
     { label: "Recent Role", value: "Student – IT Operations (Software Development Co-op) @ Trillium Health Partners" },
     { label: "Primary Stack", value: "TypeScript · Python · Next.js · PostgreSQL · FastAPI" },
   ],
@@ -93,7 +93,7 @@ export const experiences: Experience[] = [
     ],
   },
   {
-    period: "Mar. 2022 – Present",
+    period: "Mar. 2022 – 2024",
     company: "Volunteering MBC",
     location: "Mississauga, ON",
     role: "SAVVY Volunteer & Community Lead",
@@ -111,7 +111,7 @@ export const educationEntries = [
     school: "Wilfrid Laurier University",
     country: "Waterloo, ON, Canada",
     degree: "Honours BSc — Computer Science",
-    yearRange: "2025 – Expected 2030",
+    yearRange: "2025 – Expected April 2029",
     highlights: [
       "Second-year Honours Computer Science student (started September 2025), planning a Mathematics Minor and Big Data Systems concentration (not yet formally declared).",
       "Completed core coursework in Python programming (CP104), data structures & algorithms (CP164), relational databases & SQL (CP363), linear algebra (MA122), and calculus (MA103).",
@@ -214,8 +214,6 @@ export const skillGroups = [
       "Linux",
       "Sunbird dcTrack",
       "Power IQ",
-      "VMware",
-      "Veeam Backup",
     ],
   },
 ];
